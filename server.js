@@ -11,19 +11,21 @@ app.get('/',function(req, res){
 
 var count = 0;
 
+io.on('player',function(){
+  setInterval(function() {
+    io.emit('receive player', count + ' people are chatting.');
+    console.log(count + ' people are chatting.');
+  },60000);
+});
+
 io.on('connection', function(socket){
   count++;
   console.log('user connected: ', socket.id);
 
-  setInterval(function() {
-    io.emit('receive message', count + ' people are chatting.');
-    console.log(count + ' people are chatting.');
-  },60000);
-
   socket.on('welcome', function(name){
     io.emit('receive message', name + ' joined the chat');
     console.log('hello! ' + name);
-  })
+  });
 
   socket.on('disconnect', function(){
     count--;

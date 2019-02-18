@@ -44,6 +44,10 @@
       socket.on('change name', function(name){
         $('#name').val(name);
       });
+      socket.on('receive player', function(msg){
+        $('#chatLog').append(msg+'\n');
+        $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
+      })
     </script>
   </body>
 </html>

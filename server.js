@@ -13,10 +13,11 @@ var count=0;
 
 
 io.on('connection', function(socket){
-  socket.on('hello', function(name){
-    console.log('user connected: ', socket.id);
-    console.log(name);
-  });
+  count++;
+  console.log('user connected: ', socket.id);
+  console.log('User : ' + count);
+  var name = "user";
+
   socket.on('disconnect', function(){
     count--;
     console.log('user disconnected: ', socket.id);

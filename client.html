@@ -25,9 +25,8 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      const name = prompt('이름을 입력하세요');
-      $('#name').val(name);
-      socket.emit('hello', name);
+      const name = prompt('What your name');
+      $('#name').val(name)
       var socket = io();
       $('#chat').on('submit', function(e){
         socket.emit('send message', $('#name').val(), $('#message').val());
@@ -38,6 +37,9 @@
       socket.on('receive message', function(msg){
         $('#chatLog').append(msg+'\n');
         $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
+      });
+      socket.on('change name', function(name){
+        $('#name').val(name);
       });
     </script>
   </body>

@@ -1,0 +1,28 @@
+<!-- login.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login</title>
+  </head>
+  <body>
+    <form id='go'>
+      <input id="name" class="name" type="text">
+      <input type="submit" class="go" value="go"/>
+    </form>
+    <script src="/socket.io/socket.io.js"></script> <!-- 1 -->
+    <script src="//code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      var socket = io(); //1
+      $('#go').on('submit', function(e){ //2
+        socket.emit('user', $('#name').val());
+        $('#message').focus();
+        e.preventDefault();
+      });
+      socket.on('change name', function(name){ //4
+        $('#name').val(name);
+      });
+    </script>
+  </body>
+</html>

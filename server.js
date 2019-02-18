@@ -15,8 +15,11 @@ var count=0;
 io.on('connection', function(socket){
   count++;
   console.log('user connected: ', socket.id);
-  console.log('User : ' + count);
-  var name = "user";
+
+  socket.on('welcome', function(name){
+    io.emit('receive message', name+' joined the chat')
+    console.log('hello! '+name)
+  })
 
   socket.on('disconnect', function(){
     count--;

@@ -25,9 +25,12 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      const name = prompt('What your name');
+      const name = prompt('Input your name');
       $('#name').val(name)
       var socket = io();
+
+      socket.emit('welcome', name);
+
       $('#chat').on('submit', function(e){
         socket.emit('send message', $('#name').val(), $('#message').val());
         $('#message').val('');

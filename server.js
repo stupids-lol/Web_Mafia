@@ -12,7 +12,7 @@ app.get('/',function(req, res){
 var count = 0;
 
 var Countsend = setInterval(function() {
-  io.emit('receive', count + ' people are chatting.');
+  io.emit('receive message', count + ' people are chatting.');
   console.log(count + ' people are chatting.');
 },60000);
 

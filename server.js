@@ -9,22 +9,26 @@ app.get('/',function(req, res){
   res.sendFile(__dirname + '/client.html');
 });
 
-var count=0;
+var count = 0;
 
+var Countsend = setlnterval(function() {
+  io.emit('receive', count + ' people are chatting.');
+  console.log(count + ' people are chatting.');
+},60000);
 
 io.on('connection', function(socket){
   count++;
   console.log('user connected: ', socket.id);
 
   socket.on('welcome', function(name){
-    io.emit('receive message', name+' joined the chat')
-    console.log('hello! '+name)
+    io.emit('receive message', name + ' joined the chat');
+    console.log('hello! ' + name);
   })
 
   socket.on('disconnect', function(){
     count--;
+    io.emit('receive message', name + 'disconnected the chat OTL');
     console.log('user disconnected: ', socket.id);
-    console.log('User : ' + count);
   });
 
   socket.on('user', function(name01){

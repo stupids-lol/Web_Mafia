@@ -27,7 +27,6 @@ io.on('connection', function(socket){
 
   socket.on('disconnect', function(){
     count--;
-    io.emit('receive message', name + 'disconnected the chat OTL');
     console.log('user disconnected: ', socket.id);
   });
 

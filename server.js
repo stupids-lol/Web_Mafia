@@ -1,5 +1,3 @@
-// server.js
-
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -10,6 +8,7 @@ app.get('/',function(req, res){
 });
 
 var count = 0;
+var nameDict = {};
 
 io.on('connection', function(socket){
   count++;
@@ -17,19 +16,17 @@ io.on('connection', function(socket){
 
   socket.on('welcome', function(name){
     io.emit('receive message', name + ' joined the chat');
+    io.emit('receive message', count + ' people are chatting.');
     console.log('hello! ' + name);
-  });
-
-  socket.on('player', function(){
-    setInterval(function() {
-      io.emit('receive player', count + ' people are chatting.');
-      console.log(count + ' people are chatting.');
-    },60000);
+    console.log(count + ' people are chatting.');
+    nameDict[socket.id] = name;
   });
 
   socket.on('disconnect', function(){
     count--;
+    io.emit('receive message', nameDict[socket.id] + 'left the chat');
     console.log('user disconnected: ', socket.id);
+    delete nameDict[socket.id];
   });
 
   socket.on('user', function(name01){
@@ -37,9 +34,11 @@ io.on('connection', function(socket){
   });
 
   socket.on('send message', function(name,text){
-    var msg = name + ' : ' + text;
-    console.log(msg);
-    io.emit('receive message', msg);
+    if (text != ''){
+      var msg = name + ' : ' + text;
+      console.log(msg);
+      io.emit('receive message', msg);
+    }
   });
 });
 

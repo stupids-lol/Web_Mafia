@@ -30,6 +30,7 @@
       var socket = io();
 
       socket.emit('welcome', name);
+      socket.emit('player');
 
       $('#chat').on('submit', function(e){
         socket.emit('send message', $('#name').val(), $('#message').val());

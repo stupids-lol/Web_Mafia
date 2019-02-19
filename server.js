@@ -29,7 +29,9 @@ io.on('connection', function(socket){ // if client connected
   socket.on('disconnect', function(){ // if client disconect
     count--;
     io.emit('receive message', nameDict[socket.id] + ' left the chat');
+    io.emit('receive message', count + ' people are chatting.');
     console.log('user disconnected: ', socket.id);
+    console.log(count + ' people are chatting.');
     delete nameDict[socket.id];
   });
 

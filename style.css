@@ -6,6 +6,7 @@ body {font: Helvetica, Arial;}
     overflow: hidden;
 }
 .scrollBlind{
+    overflow-y: scroll;
 }
 
 .name{ width: 10%; }

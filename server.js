@@ -29,10 +29,6 @@ io.on('connection', function(socket){
     delete nameDict[socket.id];
   });
 
-  socket.on('user', function(name01){
-    console.log(name01);
-  });
-
   socket.on('send message', function(name,text){
     if (text != ''){
       var msg = name + ' : ' + text;

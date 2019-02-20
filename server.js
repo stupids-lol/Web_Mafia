@@ -7,9 +7,9 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const io = require('./io.js')(http);
-const root = require('./routers/root')
+const root = require('./routers/index.js');
 
-app.use('/', root)
+app.use('/', root);
 app.use(express.static(__dirname + '/statics/'));
 
 http.listen(3000, function(){

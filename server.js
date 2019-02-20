@@ -15,4 +15,4 @@ http.listen(3000, function(){
   console.log('server on!');
 });
 
-module.exports = count;
+module.exports = app;

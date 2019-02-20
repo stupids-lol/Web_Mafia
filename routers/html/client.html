@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <title>Chat</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
     <div class="view">
@@ -25,7 +25,7 @@
     <script>
       const name = prompt('Input your name');
       $('#name').val(name)
-      var socket = io();
+      const socket = io();
 
       socket.emit('welcome', name);
 

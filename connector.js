@@ -11,14 +11,14 @@ var connector
 function handleDisconnect(){
   connector = mysql.createConnection(db);
 
-  connection.connect(function(err){
+  connector.connect(function(err){
     if(err){
       console.log('ConnectingError : ', err);
       setTimeout(handleDisconnect, 2000);
     }
   });
 
-  connection.on('error', function(err){
+  connector.on('error', function(err){
     console.log('DBError : ', err);
     if(err.code === 'PROTOCOL_CONNECTION_LOST'){
       handleDisconnect();

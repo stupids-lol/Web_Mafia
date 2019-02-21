@@ -1,7 +1,12 @@
 /* style.css */
-
+@font-face{ 
+  font-family:'mobsters';
+  src:url('../../public/fonts/mobsters.regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 body {
-  font: Helvetica, Arial;
+  font-family : "mobsters","Helvetica", "Arial";
 }
 
 .view{

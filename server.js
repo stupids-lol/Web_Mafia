@@ -6,11 +6,26 @@ let nameDict = {}; //mapping to socket id and name
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
-const io = require('./io.js')(http);
-const root = require('./routers/index.js');
+const body = require('body-parser')
 
-app.use('/', root);
+const io = require('./modules/io.js')(http);
+
+const index = require('./routers/index.js');
+const register = require('./routers/register.js');
+const chat = require('./routers/chat.js');
+
+
+
+app.use('/', index);
+app.use('/register', register);
+app.use('/chat', chat);
+
 app.use(express.static(__dirname + '/statics/'));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
+
+
 
 http.listen(3000, function(){
   console.log(count + ' people are chatting.');

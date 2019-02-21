@@ -33,6 +33,9 @@
         $('#chatLog').append($('<li>').text(msg));
         $('.scrollBlind').scrollTop($('.scrollBlind')[0].scrollHeight);
       });
+      socket.on('redirection', function(path){
+        window.location.href = path;
+      })
 
     </script>
   </body>

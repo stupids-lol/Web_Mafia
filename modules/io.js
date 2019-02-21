@@ -12,12 +12,20 @@ module.exports = function(server, session){
 
   io.on('connection', function(socket){ // if client connected
     socket.handshake.session.save();
-    const name = socket.handshake.session.user.name
-    count++;
-    console.log('user connected: ', name);
+    
+    let name;
 
-    io.emit('receive message', name + ' joined the chat');
-    io.emit('receive message', count + ' people are chatting.');
+    if(socket.handshake.session.user === undefined){
+      io.to(socket.id).emit('redirection', '/');
+    }
+    else{
+      name = socket.handshake.session.user.name
+      count++;
+      console.log('user connected: ', name);
+
+      io.emit('receive message', name + ' joined the chat');
+      io.emit('receive message', count + ' people are chatting.');
+    }
 
     socket.on('disconnect', function(){ // if client disconect
       count--;

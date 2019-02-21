@@ -3,7 +3,6 @@ const router = express.Router();
 const db = require('../modules/connector');
 
 router.get('/', function(req, res){
-  res.redirect('/register')
   res.sendFile(__dirname + '/html/index.html');
 });
 

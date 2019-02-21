@@ -10,7 +10,7 @@ router.post('/', function(req, res){
   const email = req.body.email;
   const password = req.body.password;
   const selectSql = 'select * from users where email = ? and password = ?';
-  const insertSql = 'insert into table (email, password) values(?, ?)';
+  const insertSql = 'insert into users (email, password) values(?, ?)';
   const params = [email, password];
 
   db.query(selectSql, params, function(err, result){

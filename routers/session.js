@@ -54,3 +54,5 @@ router.route('/s/routers/html/index').post(
         }
     }
 );
+
+module.exports = router;

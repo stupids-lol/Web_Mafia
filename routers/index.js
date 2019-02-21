@@ -16,7 +16,7 @@ router.post('/', function(req, res){
     if (err) throw err;
 
     if (result.length === 0){
-      res.send('<script type="text/javascript">alert("존재하지 않는 이메일 주소입니다");window.location.href = "/";</script>');
+      res.send('<script type="text/javascript">alert("로그인 실패");window.location.href = "/";</script>');
     }
     else{
       res.redirect('/chat');

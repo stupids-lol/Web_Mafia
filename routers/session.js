@@ -10,8 +10,7 @@ router.route('/routers/html/chat').get(
     {
         console.log('/routers/chat  라우팅 함수 실행');
 
-        //세션정보는 req.session 에 들어 있다
-        if (req.session.user)       //세션에 유저가 있다면
+        if (req.session.user)
         {
             res.redirect('/html/chat.html');
         }
@@ -23,7 +22,7 @@ router.route('/routers/html/chat').get(
     }
 );
 
-router.route('/routers/html/index').post(                      //설정된 쿠키정보를 본다
+router.route('/routers/html/index').post(
     function (req, res) {
         console.log('/routers/index 라우팅 함수호출 됨');
 

@@ -15,7 +15,6 @@
       </div>
     </div>
     <form id="chat">
-      <input id="name" class="name" type="text" readonly>
       <input id="message" class="message" type="text">
       <input type="submit" class="chat" value="chat"/>
     </form>
@@ -23,14 +22,9 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      const name = prompt('Input your name');
-      $('#name').val(name)
       const socket = io();
-
-      socket.emit('welcome', name);
-
       $('#chat').on('submit', function(e){
-        socket.emit('send message', $('#name').val(), $('#message').val());
+        socket.emit('send message', $('#message').val());
         $('#message').val('');
         $('#message').focus();
         e.preventDefault();
@@ -39,6 +33,9 @@
         $('#chatLog').append($('<li>').text(msg));
         $('.scrollBlind').scrollTop($('.scrollBlind')[0].scrollHeight);
       });
+      socket.on('redirection', function(path){
+        window.location.href = path;
+      })
 
     </script>
   </body>

@@ -23,6 +23,7 @@ const register = require('./routers/register.js');
 const chat = require('./routers/chat.js');
 
 
+app.use(express.static(__dirname + '/'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
@@ -32,7 +33,6 @@ app.use(cookieParser());
 app.use('/', index);
 app.use('/register', register);
 app.use('/chat', chat);
-app.use(express.static(__dirname + '/statics/'));
 
 app.all('*',
     function (req, res) {

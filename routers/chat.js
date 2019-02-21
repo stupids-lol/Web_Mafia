@@ -4,12 +4,11 @@ const router = express.Router();
 router.get('/', function(req, res){
   console.log('/chat  라우팅 함수 실행');
 
-  if (req.session.user){
-    res.sendFile(__dirname + '/html/chat.html');
+  if (req.session.user === undefined){
+    res.redirect('/');
   }
   else{
-    res.redirect('/');
-
+    res.sendFile(__dirname + '/html/chat.html');
   }
 });
 

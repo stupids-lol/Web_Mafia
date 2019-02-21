@@ -3,7 +3,12 @@ const router = express.Router();
 const db = require('../modules/connector');
 
 router.get('/', function(req, res){
-  res.sendFile(__dirname + '/html/index.html');
+  if (req.session.user === undefined){
+    res.sendFile(__dirname + '/html/index.html');
+  }
+  else {
+    res.redirect('/chat');
+  }
 });
 
 router.post('/', function(req, res){
@@ -12,27 +17,21 @@ router.post('/', function(req, res){
   const selectSql = 'select * from users where email = ? and password = ?';
   const params = [email, password];
 
-  if (req.session.user !== undefined) {
+  db.query(selectSql, params, function(err, result){
+    if (err) throw err;
+    if (result.length === 0){
+      res.send('<script type="text/javascript">alert("로그인 실패");window.location.href = "/";</script>');
+    }
+    else{
+      req.session.user ={
+        id: email,
+        pw: password,
+        name: 'LOL',
+        authorized: true
+      };
       res.redirect('/chat');
-  }
-  else {
-    db.query(selectSql, params, function(err, result){
-      if (err) throw err;
-
-      if (result.length === 0){
-        res.send('<script type="text/javascript">alert("로그인 실패");window.location.href = "/";</script>');
-      }
-      else{
-        req.session.user ={
-          id: email,
-          pw: password,
-          name: 'LOL',
-          authorized: true
-        };
-        res.redirect('/chat');
-      }
-    });
-  }
+    }
+  });
 });
 
 module.exports = router;

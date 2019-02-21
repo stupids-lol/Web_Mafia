@@ -10,7 +10,13 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 
-const io = require('./modules/io.js')(http);
+const session = expressSession({
+  secret: 'my key',
+  resave: true,
+  saveUninitialized:true
+});
+app.use(session);
+const io = require('./modules/io.js')(http, session);
 
 const index = require('./routers/index.js');
 const register = require('./routers/register.js');
@@ -20,18 +26,13 @@ const chat = require('./routers/chat.js');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
-app.use(expressSession({
-  secret: 'my key',
-  resave: true,
-  saveUninitialized:true
-}));
+
+app.use(cookieParser());
 
 app.use('/', index);
 app.use('/register', register);
 app.use('/chat', chat);
 app.use(express.static(__dirname + '/statics/'));
-
-app.use(cookieParser());
 
 app.all('*',
     function (req, res) {

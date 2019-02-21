@@ -1,3 +1,5 @@
+//index.js
+
 const express = require('express');
 const router = express.Router();
 const db = require('../modules/connector');
@@ -22,14 +24,17 @@ router.post('/', function(req, res){
     if (result.length === 0){
       res.send('<script type="text/javascript">alert("로그인 실패");window.location.href = "/";</script>');
     }
-    else{
+    else if (result[0].password === password){
       req.session.user ={
         id: email,
         pw: password,
-        name: 'LOL',
+        name: result[0].name,
         authorized: true
       };
       res.redirect('/chat');
+    }
+    else{
+      res.send('<script type="text/javascript">alert("로그인 실패");window.location.href = "/";</script>');
     }
   });
 });

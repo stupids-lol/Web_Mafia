@@ -5,7 +5,7 @@ const expressSession = require('express-session');
 
 const router = express.Router();
 
-router.route('s/chat').get(
+router.route('/chat').get(
     function (req, res)
     {
         console.log('/chat  라우팅 함수 실행');
@@ -22,7 +22,7 @@ router.route('s/chat').get(
     }
 );
 
-router.route('/s/html/index').post(
+router.route('/html/index').post(
     function (req, res) {
         console.log('index 라우팅 함수호출 됨');
 

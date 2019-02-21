@@ -12,10 +12,11 @@ module.exports = function(server, session){
 
   io.on('connection', function(socket){ // if client connected
     socket.handshake.session.save();
-    
+
     let name;
 
     if(socket.handshake.session.user === undefined){
+      count++;
       io.to(socket.id).emit('redirection', '/');
     }
     else{

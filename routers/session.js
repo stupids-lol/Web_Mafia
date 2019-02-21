@@ -24,7 +24,7 @@ router.route('/s/chat').get(
 
 router.route('/s/html/index').post(
     function (req, res) {
-        console.log('/routers/index 라우팅 함수호출 됨');
+        console.log('index 라우팅 함수호출 됨');
 
         var paramID = req.body.id || req.query.id;
         var pw = req.body.passwords || req.query.passwords;
@@ -39,7 +39,7 @@ router.route('/s/html/index').post(
             res.end();
 
         } else {
-            req.session.user =
+            req.session =
                 {
                     id: paramID,
                     pw: pw,
@@ -49,7 +49,7 @@ router.route('/s/html/index').post(
             res.writeHead(200, { "Content-Type": "text/html;characterset=utf8" });
             res.write('<h1>Login Success</h1>');
             res.write('[ID] : ' + paramID + ' [PW] : ' + pw);
-            res.write('<a href="/routers/html/chat">Move</a>');
+            res.write('<a href="/s/html/chat">Move</a>');
             res.end();
         }
     }

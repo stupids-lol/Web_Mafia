@@ -12,16 +12,27 @@ router.post('/', function(req, res){
   const selectSql = 'select * from users where email = ? and password = ?';
   const params = [email, password];
 
-  db.query(selectSql, params, function(err, result){
-    if (err) throw err;
-
-    if (result.length === 0){
-      res.send('<script type="text/javascript">alert("로그인 실패");window.location.href = "/";</script>');
-    }
-    else{
+  if (req.session.user !== undefined) {
       res.redirect('/chat');
-    }
-  });
+  }
+  else {
+    db.query(selectSql, params, function(err, result){
+      if (err) throw err;
+
+      if (result.length === 0){
+        res.send('<script type="text/javascript">alert("로그인 실패");window.location.href = "/";</script>');
+      }
+      else{
+        req.session.user ={
+          id: email,
+          pw: password,
+          name: 'LOL',
+          authorized: true
+        };
+        res.redirect('/chat');
+      }
+    });
+  }
 });
 
 module.exports = router;

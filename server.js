@@ -15,18 +15,20 @@ const io = require('./modules/io.js')(http);
 const index = require('./routers/index.js');
 const register = require('./routers/register.js');
 const chat = require('./routers/chat.js');
-const session = require('./routers/session.js');
 
 
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
+app.use(expressSession({
+  secret: 'my key',
+  resave: true,
+  saveUninitialized:true
+}));
 
 app.use('/', index);
 app.use('/register', register);
 app.use('/chat', chat);
-app.use('/s', session);
-
 app.use(express.static(__dirname + '/statics/'));
 
 app.use(cookieParser());
@@ -37,11 +39,7 @@ app.all('*',
     }
 );
 
-app.use(expressSession({
-    secret: 'my key',
-    resave: true,
-    saveUninitialized:true
-}));
+
 
 http.listen(3000, function(){
   console.log(__dirname);

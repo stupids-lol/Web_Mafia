@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../modules/connector');
 
 router.get('/', function(req, res){
-  res.sendFile('./html/index.html');
+  res.sendFile(__dirname + '/html/index.html');
 });
 
 router.post('/', function(req, res){

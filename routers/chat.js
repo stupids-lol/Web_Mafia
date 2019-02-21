@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/chat', function(req, res){
+router.get('/', function(req, res){
   res.sendFile(__dirname + '/html/chat.html');
 });
 

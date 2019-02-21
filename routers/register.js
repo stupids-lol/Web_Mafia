@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const db = require('../modules/connector');
 
-router.get('/register',function(req, res){
+router.get('/',function(req, res){
   res.sendFile(__dirname + '/html/register.html');
 });
 
-router.post('/register', function(req, res){
+router.post('/', function(req, res){
   const email = req.body.email;
   const password = req.body.password;
   const selectSql = 'select * from users where email = ? and password = ?';

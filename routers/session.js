@@ -22,7 +22,7 @@ router.route('/s/chat').get(
     }
 );
 
-router.route('/s/routers/html/index').post(
+router.route('/s/html/index').post(
     function (req, res) {
         console.log('/routers/index 라우팅 함수호출 됨');
 

@@ -5,7 +5,7 @@ const expressSession = require('express-session');
 
 const router = express.Router();
 
-router.route('/s/chat').get(
+router.route('s/chat').get(
     function (req, res)
     {
         console.log('/chat  라우팅 함수 실행');

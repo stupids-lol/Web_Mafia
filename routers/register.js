@@ -25,7 +25,6 @@ router.post('/register', function(req, res){
         res.redirect('/');
       })
     }
-  }
 });
 
 module.exports = router;

@@ -5,7 +5,7 @@ const expressSession = require('express-session');
 
 const router = express.Router();
 
-router.route('/routers/chat').get(
+router.route('/routers/html/chat').get(
     function (req, res)
     {
         console.log('/routers/chat  라우팅 함수 실행');
@@ -23,7 +23,7 @@ router.route('/routers/chat').get(
     }
 );
 
-router.route('/routers/index').post(                      //설정된 쿠키정보를 본다
+router.route('/routers/html/index').post(                      //설정된 쿠키정보를 본다
     function (req, res) {
         console.log('/routers/index 라우팅 함수호출 됨');
 

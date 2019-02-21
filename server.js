@@ -15,6 +15,7 @@ const io = require('./modules/io.js')(http);
 const index = require('./routers/index.js');
 const register = require('./routers/register.js');
 const chat = require('./routers/chat.js');
+const session = require('./routers/session.js');
 
 
 

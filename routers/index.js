@@ -21,7 +21,7 @@ router.post('/', function(req, res){
     else{
       res.redirect('/chat');
     }
-  }
-})
+  });
+});
 
 module.exports = router;

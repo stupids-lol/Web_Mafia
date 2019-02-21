@@ -55,11 +55,3 @@ router.route('/routers/html/index').post(                      //설정된 쿠�
         }
     }
 );
-
-
-const appServer = http.createServer(app);
-appServer.listen(app.get('port'),
-    function () {
-        console.log('express 웹서버 실행' + app.get('port'));
-    }
-);

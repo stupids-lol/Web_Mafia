@@ -6,7 +6,7 @@ let nameDict = {}; //mapping to socket id and name
 const express = require('express');
 const app = express();
 const http = require('http').Server(app);
-const body = require('body-parser')
+const bodyParser = require('body-parser')
 
 const io = require('./modules/io.js')(http);
 

@@ -5,10 +5,10 @@ const expressSession = require('express-session');
 
 const router = express.Router();
 
-router.route('/routers/html/chat').get(
+router.route('/s/chat').get(
     function (req, res)
     {
-        console.log('/routers/chat  라우팅 함수 실행');
+        console.log('/chat  라우팅 함수 실행');
 
         if (req.session.user)
         {
@@ -22,7 +22,7 @@ router.route('/routers/html/chat').get(
     }
 );
 
-router.route('/routers/html/index').post(
+router.route('/s/routers/html/index').post(
     function (req, res) {
         console.log('/routers/index 라우팅 함수호출 됨');
 

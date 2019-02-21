@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use('/', index);
 app.use('/register', register);
 app.use('/chat', chat);
+app.use('/s', session);
 
 app.use(express.static(__dirname + '/statics/'));
 

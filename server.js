@@ -16,19 +16,18 @@ const chat = require('./routers/chat.js');
 
 
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended : true}));
+
 app.use('/', index);
 app.use('/register', register);
 app.use('/chat', chat);
 
 app.use(express.static(__dirname + '/statics/'));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended : true}));
-
 
 
 http.listen(3000, function(){
-  console.log(count + ' people are chatting.');
   console.log(__dirname);
   console.log('server on!');
 });

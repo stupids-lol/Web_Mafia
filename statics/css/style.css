@@ -10,7 +10,7 @@
 /* 공통부분 */
 html {
   font-family : "seoulNamsan","Helvetica", "Arial";
-  letter-spacing: 5px;
+  letter-spacing: 0px;
   font-size: 200%;
 }
 
@@ -20,15 +20,35 @@ html {
   background-size : 100%;
 }
 
-.login_bar{
+
+
+.login_bar /*type="submit"]*/{
   font-size: 125%;
-  display: block;
-  text-align: center;
-  margin-left: 0px auto;
-  padding-top: 200px;
+  display: flex;
+  justify-content: center;
+  
+  
   
 }
+.input_box{
+  height: 30px;
+  width: 200px;
+  font-size: 60%;
 
+}
+.input_button{
+  background-color: #323232;
+  color:#fff;
+  height: 30px;
+  width: 70px;
+}
+
+.center_word{
+  text-align: center;
+  padding-top: 200px;
+}
+
+/*index 끝*/
 
 .view{
     overflow: hidden;

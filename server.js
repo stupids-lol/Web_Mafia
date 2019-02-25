@@ -10,6 +10,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 
+
 const session = expressSession({
   secret: 'my key',
   resave: true,
@@ -36,7 +37,7 @@ app.use('/chat', chat);
 
 app.all('*',
     function (req, res) {
-        res.status(404).send('<h1> 요청 페이지 없음 </h1>');
+        res.status(404).send('<h1> 404 Error </h1>');
     }
 );
 

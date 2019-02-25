@@ -22,7 +22,7 @@ module.exports = function(server, session){
     else{
       name = socket.handshake.session.user.name
       count++;
-      console.log('user connected: ', name);
+      console.log('user connected: ', name + getToday);
 
       io.emit('receive message', name + ' joined the chat');
       io.emit('receive message', count + ' people are chatting.');
@@ -32,17 +32,22 @@ module.exports = function(server, session){
       count--;
       io.emit('receive message', name + ' left the chat');
       io.emit('receive message', count + ' people are chatting.');
-      console.log('user disconnected: ', name);
+      console.log('user disconnected: ', name + getToday);
       console.log(count + ' people are chatting.');
     });
 
     socket.on('send message', function(text){ // if client message sned
       if (text != ''){
         var msg = name + ' : ' + text;
-        console.log(msg);
+        console.log(msg + getToday);
         io.emit('receive message', msg);
       }
     });
   });
   return io;
+}
+
+function getToday(){
+  var date = new Date();
+  return date.getFullYear() +'.'+ (date.getMonth()+1) +'.'+ date.getDate() +' '+ date.getHours() +':'+ date.getMinutes() +':'+date.getSeconds();
 }

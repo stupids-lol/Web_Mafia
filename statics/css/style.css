@@ -1,23 +1,23 @@
 /* style.css */
 /*글씨체 불러오기*/
 @font-face{ 
-  font-family:'mobsters';
-  src:url('../../public/fonts/mobsters.regular.ttf') format('truetype');
+  font-family:'seoulNamsan';
+  src:url('../../public/fonts/SeoulNamsanL.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   
 }
 /* 공통부분 */
 html {
-  font-family : "mobsters","Helvetica", "Arial";
+  font-family : "seoulNamsan","Helvetica", "Arial";
   letter-spacing: 5px;
   font-size: 200%;
 }
 
 /* index.html */
 .background_jpg{
-  background-image: url(../../public/images/mafia\ background.jpg);
-  background-size: 100%;
+  background-color: #e5e5e5;
+  background-size : 100%;
 }
 
 .login_bar{

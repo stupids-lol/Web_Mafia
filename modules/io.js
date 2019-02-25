@@ -22,7 +22,7 @@ module.exports = function(server, session){
     else{
       name = socket.handshake.session.user.name
       count++;
-      console.log('user connected: ', name + getToday);
+      console.log('user connected: ', name , getToday);
 
       io.emit('receive message', name + ' joined the chat');
       io.emit('receive message', count + ' people are chatting.');
@@ -32,7 +32,7 @@ module.exports = function(server, session){
       count--;
       io.emit('receive message', name + ' left the chat');
       io.emit('receive message', count + ' people are chatting.');
-      console.log('user disconnected: ', name + getToday);
+      console.log('user disconnected: ', name , getToday);
       console.log(count + ' people are chatting.');
     });
 

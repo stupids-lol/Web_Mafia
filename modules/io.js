@@ -39,7 +39,7 @@ module.exports = function(server, session){
     socket.on('send message', function(text){ // if client message sned
       if (text != ''){
         var msg = name + ' : ' + text;
-        console.log(msg + getToday);
+        console.log(msg + getToday());
         io.emit('receive message', msg);
       }
     });

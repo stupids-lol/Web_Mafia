@@ -15,38 +15,79 @@ html {
 }
 
 /* index.html */
+
+
+
+.login-form{
+  padding-top: 200px;
+  display: block;
+  text-align: center;
+  width: 9.5rem;
+  margin: 0px auto;
+}
+
+.form-control{
+  display: inline-block;
+  height: 30px;
+  width: 300px;
+  font-size: 60%;
+  background-color: #323232;
+  color: #fff;
+  
+  
+
+}
+.btns{
+  text-align: right;
+  box-sizing: inherit;
+  
+}
+
+
 .background_jpg{
   background-color: #e5e5e5;
   background-size : 100%;
 }
 
-
-
-.login_bar /*type="submit"]*/{
-  font-size: 125%;
-  display: flex;
-  justify-content: center;
-  
-  
-  
-}
-.input_box{
-  height: 30px;
-  width: 200px;
-  font-size: 60%;
-
-}
-.input_button{
+.login-button{
   background-color: #323232;
   color:#fff;
-  height: 30px;
-  width: 70px;
+  height: 40px;
+  width: 100px;
+  
 }
+.register_button{
+  
+    color: black;
+    background-color: #fff;
+    border-color: #ccc;
+    padding: .2rem .5rem;
+    border-radius: 0;
+    
+    
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    user-select: none;
+    border: .0625rem solid transparent;
+    text-decoration: none;
+    font-size: .6rem!important;
+    border : 2px solid black;
+}
+
+
+
 
 .center_word{
   text-align: center;
-  padding-top: 200px;
+  
 }
+
+
 
 /*index 끝*/
 

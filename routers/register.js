@@ -20,7 +20,7 @@ router.post('/', function(req, res){
     if (err) throw err;
 
     if (result.length !== 0){
-      res.send('<script type="text/javascript">alert("이미 사용중인 이메일 주소입니다")</script>');
+      res.send('<script type="text/javascript">alert("이미 사용중인 이메일 주소입니다");window.location.href = "/register"</script>');
     }
     else{
       db.query(insertSql, insertParams, function(err, result){

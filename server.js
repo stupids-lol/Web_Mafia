@@ -10,7 +10,6 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 
-
 const session = expressSession({
   secret: 'my key',
   resave: true,
@@ -22,6 +21,7 @@ const io = require('./modules/io.js')(http, session);
 const index = require('./routers/index.js');
 const register = require('./routers/register.js');
 const chat = require('./routers/chat.js');
+const logout = require('./routers/logout.js');
 
 
 app.use(express.static(__dirname + '/'));
@@ -34,6 +34,7 @@ app.use(cookieParser());
 app.use('/', index);
 app.use('/register', register);
 app.use('/chat', chat);
+app.use('/logout', logout);
 
 app.all('*',
     function (req, res) {

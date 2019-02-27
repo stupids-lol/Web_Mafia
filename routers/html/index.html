@@ -9,8 +9,8 @@
 
       <script src="//code.jquery.com/jquery-1.11.1.js"></script>
       <script type="text/javascript">
-      $('#passwordInput').keypress(function(event){
-        if (event.which == 13){
+      $(document).keypress(function(e){
+        if (e.which == 13) {
           user_in();
           return false;
         }

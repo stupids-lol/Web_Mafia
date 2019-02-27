@@ -18,11 +18,10 @@ router.post('/', function(req, res){
   const password = req.body.password;
   const selectSql = 'select * from users where email = ? and password = ?';
   const params = [email, password];
-
   db.query(selectSql, params, function(err, result){
     if (err) throw err;
     if (result.length === 0){
-      res.send('<script type="text/javascript">alert("로그인 실패");window.location.href = "/";</script>');
+      res.json({result: 'fail'});
     }
     else if (result[0].password === password){
       req.session.user ={
@@ -31,10 +30,10 @@ router.post('/', function(req, res){
         name: result[0].name,
         authorized: true
       };
-      res.redirect('/chat');
+      res.json({result: 'success'});
     }
     else{
-      res.send('<script type="text/javascript">alert("로그인 실패");window.location.href = "/";</script>');
+      res.json({result: 'fail'});
     }
   });
 });

@@ -7,11 +7,46 @@
 </head>
     <body class="background_jpg">
 
+      <script src="//code.jquery.com/jquery-1.11.1.js"></script>
+      <script type="text/javascript">
+      $('#passwordInput').keypress(function(event){
+        if (event.which == 13){
+          user_in();
+          return false;
+        }
+      });
+      function user_in(){
+        let id = $('#usernameInput').val();
+        let password = $('#passwordInput').val();
+
+        $.ajax({
+          type: 'POST',
+          url: '/',
+          data: {
+            email:id,
+            password:password
+          },
+          dataType: 'json',
+          success: function(ret){
+            if (ret.result == 'success'){
+              alert('로그인 성공!');
+              location.replace('/chat');
+            }
+            else if (ret.result == 'fail'){
+              alert('로그인 실패');
+            }
+            else{
+              alert('서버 에러');
+            }
+          }
+        })
+      }
+    </script>
  <!--
         <h1 class="center_word">Undefined</h1>
-    
+
             <div class="login_bar">
-            
+
                 <form action="/" method="post">
                     <input type="text" name="email" placeholder="E-mail" class="input_box">
 
@@ -25,7 +60,7 @@
                  <br>
             </div>
             <br>
-                
+
             <div class="register_button">
                 <form action="/" method="post">
                     <input type="submit" value='Login' class="input_button">
@@ -34,8 +69,8 @@
                     <form action="/register" method="get">
                         <input type="submit" value='Register' class="input_button">
                     </form>
-            
-                
+
+
 
             </div>
         -->
@@ -44,36 +79,35 @@
             <input type="submit" value='register'>
         </form>
     -->
-    
+
     <div class="login-form">
 
         <h1 class="center_word">Undefined</h1>
 
             <div class="input_box">
-                
+
                 <input type="text" class="form-control" id="usernameInput" name="username" value="" placeholder="E-mail">
             </div>
 
             <br>
-            
+
 
             <div class="input_box">
-                
+
                 <input type="password" class="form-control" id="passwordInput" name="password" placeholder="password">
             </div>
             <br>
-            
+
             <div class="btns">
                 <a class="register_button" href="/register">Sign in</a>
-                <button type="submit" class="login-button">Login</button>
+                <button type="submit" class="login-button" onclick="user_in()">Login</button>
             </div>
 
     </div>
 
-    
-    
-    
-   
+
+
+
 
     </body>
 </html>

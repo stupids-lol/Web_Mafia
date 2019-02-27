@@ -22,7 +22,7 @@ module.exports = function(server, session){
   lobby.on('connection', function(socket){
     socket.handshake.session.save();
 
-    lobby.to(socket.id).emit('new room', rooms);
+    socket.emit('new room', rooms);
 
     socket.on('create room', function(name){
       let data = {
@@ -33,7 +33,7 @@ module.exports = function(server, session){
       }
       num++;
       rooms.push(data);
-      socket.emit('new room', [data]);
+      lobby.emit('new room', [data]);
     })
 
     socket.on('delete room', function(no){

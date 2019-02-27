@@ -1,13 +1,49 @@
 //io.js
 
 let count = 0; // user count
+let num = 0;
+let rooms = [];
 
 module.exports = function(server, session){
   const io = require('socket.io')(server);
   const sharedsession = require("express-socket.io-session");
 
+
+  const lobby = io.of('/chatlobby');
+
   io.use(sharedsession(session), {
     autoSave:true
+  });
+
+  lobby.use(sharedsession(session), {
+    autoSave:true
+  });
+
+  lobby.on('connection', function(socket){
+    socket.handshake.session.save();
+
+    lobby.to(socket.id).emit('new room', rooms);
+
+    socket.on('create room', function(name){
+      let data = {
+        no: num,
+        name: name,
+        nop: 0,
+        leader: socket.handshake.session.user.name
+      }
+      num++;
+      rooms.push(data);
+      socket.emit('new room', [data]);
+    })
+
+    socket.on('delete room', function(no){
+      for(let i = 0; i < rooms.length; i++){
+        if (rooms[i].no == no){
+          rooms.splice(i,1);
+        }
+      }
+      socket.emit('del room', no);
+    })
   });
 
   io.on('connection', function(socket){ // if client connected
@@ -44,7 +80,7 @@ module.exports = function(server, session){
       }
     });
   });
-  return io;
+  return [io, lobby];
 }
 
 function getToday(){

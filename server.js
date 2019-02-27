@@ -2,6 +2,8 @@
 
 let count = 0; // user count
 let nameDict = {}; //mapping to socket id and name
+let num = 0;
+let rooms = [];
 
 const express = require('express');
 const app = express();
@@ -21,6 +23,7 @@ const io = require('./modules/io.js')(http, session);
 const index = require('./routers/index.js');
 const register = require('./routers/register.js');
 const chat = require('./routers/chat.js');
+const lobby = require('./routers/lobby.js');
 const logout = require('./routers/logout.js');
 
 
@@ -34,6 +37,7 @@ app.use(cookieParser());
 app.use('/', index);
 app.use('/register', register);
 app.use('/chat', chat);
+app.use('/lobby', lobby);
 app.use('/logout', logout);
 
 app.all('*',

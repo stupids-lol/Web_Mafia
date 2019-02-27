@@ -1,0 +1,51 @@
+<!-- list.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Room list</title>
+    <link rel="stylesheet" href="../../statics/css/style.css">
+  </head>
+  <body>
+    <table id='list'>
+      <thead>
+        <tr>
+          <th>방 번호</th>
+          <th style="overflow: hidden">방 이름</th>
+          <th>인원</th>
+          <th>방장</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-if='rooms.length === 0'>
+          <td colspan="4">생성된 채팅방이 없습니다</td>
+        </tr>
+        <template v-for='room in rooms'>
+          <tr>
+            <td>{{ room.no }}</td>
+            <td>{{ room.name }}</td>
+            <td>{{ room.nop }}</td>
+            <td>{{ room.leader }}</td>
+          </tr>
+        </template>
+      </tbody>
+      </ol>
+    </table>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript">
+      let rms = [
+        { no:'방 넘버임', name:'방 이름임', nop:'방 인원임', leader:'방장 이름임'},
+        { no:'방 넘버림', name:'방 이름림', nop:'방 인원림', leader:'방장 이름림'},
+        { no:'방 넘버님', name:'방 이름님', nop:'방 인원님', leader:'방장 이름님'},
+        { no:'방 넘버밈', name:'방 이름밈', nop:'방 인원밈', leader:'방장 이름밈'}
+      ];
+      let list = new Vue({
+        el: '#list',
+        data: {
+          rooms: rms
+        }
+      });
+    </script>
+  </body>
+</html>

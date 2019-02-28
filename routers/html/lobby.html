@@ -31,6 +31,7 @@
         </template>
       </tbody>
       <button onclick='createRoom()'>방 만들기</button>
+      <button onclick='deleteRoom()'>방 지우기</button>
     </table>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -43,7 +44,7 @@
         }
       });
       socket.on('del room', function(no){
-        for(let i = 0; i < rooms.length; i++){
+        for(let i = 0; i < rms.length; i++){
           if (rms[i].no == no){
             rms.splice(i,1);
           }
@@ -58,6 +59,10 @@
       function createRoom(){
         let name = prompt('Input room name');
         socket.emit('create room', name);
+      }
+      function deleteRoom(){
+        let no = prompt("Input room's nubmer");
+        socket.emit('delete room', no);
       }
     </script>
   </body>

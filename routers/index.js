@@ -3,6 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../modules/connector');
+const crypto = require('crypto');
 
 router.get('/', function(req, res){
   if (req.session.user === undefined){
@@ -15,7 +16,7 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
   const email = req.body.email;
-  const password = req.body.password;
+  const password = crypto.createHash('sha512').update(crypto.createHash('sha512').update(req.body.password).digest('base64')).digest('base64');
   const selectSql = 'select * from users where email = ? and password = ?';
   const params = [email, password];
   db.query(selectSql, params, function(err, result){

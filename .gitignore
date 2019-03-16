@@ -1,2 +1,2 @@
 # json 파일도 커밋 안함
-*.json
+package-lock.json

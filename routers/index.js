@@ -18,19 +18,22 @@ router.post('/', function(req, res){
   const email = req.body.email;
   const password = crypto.createHash('sha512').update(crypto.createHash('sha512').update(req.body.password).digest('base64')).digest('base64');
   const selectSql = 'select * from users where email = ? and password = ?';
-  const params = [email, password];
+  const updateSql = 'update users set status=1 where email = ?'
+  const params = [email, password]
   db.query(selectSql, params, function(err, result){
     if (err) throw err;
     if (result.length === 0){
       res.json({result: 'fail'});
     }
-    else if (result[0].password === password){
+    else if (result[0].password === password && result[0].status == 0){
       req.session.user ={
         id: email,
-        pw: password,
         name: result[0].name,
         authorized: true
       };
+      db.query(updateSql, [email], function(err, result){
+        if (err) throw err;
+      });
       res.json({result: 'success'});
     }
     else{

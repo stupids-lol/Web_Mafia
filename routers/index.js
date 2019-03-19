@@ -10,7 +10,7 @@ router.get('/', function(req, res){
     res.sendFile(__dirname + '/html/index.html');
   }
   else {
-    res.redirect('/chat');
+    res.redirect('/lobby');
   }
 });
 

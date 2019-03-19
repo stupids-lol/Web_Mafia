@@ -41,7 +41,6 @@ module.exports = function(server, session){
         if (rooms[i].no == no){
           rooms.splice(i,1);
         }
-        console.log(rooms);
       }
       lobby.emit('del room', no);
     })

@@ -1,7 +1,7 @@
 //io.js
 
 let count = 0; // user count
-let num = 0;
+let num = 1;
 let rooms = [];
 
 module.exports = function(server, session){

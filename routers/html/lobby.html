@@ -32,6 +32,7 @@
       </tbody>
       <button onclick='createRoom()'>방 만들기</button>
       <button onclick='deleteRoom()'>방 지우기</button>
+      <button onclick='joinRoom()'>참가하기</button>
       <button type="button" class="logout" onclick="javascript:window.location.href = '/logout'">logout</button>
     </table>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -40,6 +41,11 @@
       let rms = [];
       const socket = io('/chatlobby');
       socket.on('new room', function(data){
+        for(let i = 0; i < data.length; i++){
+          rms.push(data[i]);
+        }
+      });
+      socket.on('join room', function(data){
         for(let i = 0; i < data.length; i++){
           rms.push(data[i]);
         }
@@ -64,6 +70,10 @@
       function deleteRoom(){
         let no = prompt("Input room's nubmer");
         socket.emit('delete room', no);
+      }
+      function joinRoom(){
+        let no = prompt("Input room's nubmer");
+        socket.emit('join room', no);
       }
     </script>
   </body>

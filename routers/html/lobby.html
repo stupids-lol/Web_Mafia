@@ -46,8 +46,11 @@
         }
       });
       socket.on('join room', function(data){
-        for(let i = 0; i < data.length; i++){
-          rms.push(data[i]);
+        for(let = 0; i < rms.length; i++){
+          if(rms[i].no == no){
+            socket.join(no);
+            console.log('socket.join',no);
+          }
         }
       });
       socket.on('del room', function(no){

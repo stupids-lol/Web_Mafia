@@ -40,6 +40,7 @@ module.exports = function(server, session){
       for(let i = 0; i < rooms.length; i++){
         if(rooms[i].no == no){
           socket.join(no);
+          console.log('socket.join',no);
         }
       }
     })

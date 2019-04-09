@@ -41,9 +41,9 @@ module.exports = function(server, session){
         if(rooms[i].no == no){
           socket.join(no);
           console.log('socket.join',no);
-          lobby.emit('join room', no);
         }
       }
+      lobby.emit('join room', no);
     })
 
     socket.on('delete room', function(no){

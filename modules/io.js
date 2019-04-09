@@ -37,6 +37,7 @@ module.exports = function(server, session){
     })
 
     socket.on('join room', function(no){
+      console.log(no);
       for(let i = 0; i < rooms.length; i++){
         if(rooms[i].no == no){
           socket.join(no);

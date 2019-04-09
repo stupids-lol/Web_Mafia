@@ -42,7 +42,6 @@ module.exports = function(server, session){
           socket.join(no);
         }
       }
-      lobby.emit('new room', "success");
     })
 
     socket.on('delete room', function(no){

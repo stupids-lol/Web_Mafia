@@ -45,7 +45,7 @@
           rms.push(data[i]);
         }
       });
-      socket.on('join room', function(data){
+      socket.on('join room', function(no){
         for(let = 0; i < rms.length; i++){
           if(rms[i].no == no){
             socket.join(no);

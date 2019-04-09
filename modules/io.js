@@ -36,6 +36,18 @@ module.exports = function(server, session){
       lobby.emit('new room', [data]);
     })
 
+    socket.on('join room', function(name){
+      let data = {
+        no: num,
+        name: name,
+        nop: 0,
+        leader: socket.handshake.session.user.name
+      }
+      num++;
+      rooms.push(data);
+      lobby.emit('new room', [data]);
+    })
+
     socket.on('delete room', function(no){
       for(let i = 0; i < rooms.length; i++){
         if (rooms[i].no == no){

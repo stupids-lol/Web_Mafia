@@ -30,9 +30,6 @@ router.post('/', function(req, res){
         name: result[0].name,
         authorized: true
       };
-      db.query(updateSql, [email], function(err, result){
-        if (err) throw err;
-      });
       res.json({result: 'success'});
     }
     else{

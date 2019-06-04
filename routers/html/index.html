@@ -82,7 +82,11 @@
 
     <div class="login-form">
 
-        <h1 class="center_word">web_mafia</h1>
+        <h1 class="center_word">Web_Mafia</h1>
+
+        <div id="image_box">
+          <div id="mafia_image"></div>
+        </div>
 
             <div class="input_box">
 
@@ -94,12 +98,15 @@
 
             <div class="input_box">
 
-                <input type="password" class="form-control" id="passwordInput" name="password" placeholder="password">
+                <input type="password" class="form-control" id="passwordInput" name="Password" placeholder="password">
             </div>
             <br>
 
             <div class="btns">
-                <a class="register_button" href="/register">Sign in</a>
+              <input type="button" value="Sign in" class="login-button"  onClick="javascript:location.href='register';"	>
+              <!--  
+              <a class="register_button" href="/register">Sign in</a>
+              -->
                 <button type="submit" class="login-button" onclick="user_in()">Login</button>
             </div>
 

@@ -19,7 +19,7 @@ html {
 
 
 .login-form{
-  padding-top: 200px;
+  
   display: block;
   text-align: center;
   width: 9.5rem;
@@ -34,8 +34,10 @@ html {
   background-color: #323232;
   color: #fff;
   
-  
+}
 
+.center_word{
+  color:white;
 }
 .btns{
   text-align: right;
@@ -45,7 +47,7 @@ html {
 
 
 .background_jpg{
-  background-color: #e5e5e5;
+  background-color: black;
   background-size : 100%;
 }
 
@@ -79,13 +81,28 @@ html {
     border : 2px solid black;
 }
 
-
-
-
-.center_word{
-  text-align: center;
-  
+.image_box{
+    background: #fff;
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    text-align: center;
+    width: 60px;
+    height: 60px;
+    background-image: url(/public/images/mafia_front.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 50%;
 }
+
+
+.mafia_image{
+  background-image: url(/public/images/mafia_front.jpg);
+}
+
+
+
+
 
 
 

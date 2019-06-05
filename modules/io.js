@@ -10,12 +10,17 @@ module.exports = function(server, session){
 
 
   const lobby = io.of('/chatlobby');
+  const chat = io.of('/chat');
 
   io.use(sharedsession(session), {
     autoSave:true
   });
 
   lobby.use(sharedsession(session), {
+    autoSave:true
+  });
+
+  chat.use(sharedsession(session), {
     autoSave:true
   });
 
@@ -34,7 +39,7 @@ module.exports = function(server, session){
       num++;
       rooms.push(data);
       lobby.emit('new room', [data]);
-    })
+    });
 
     socket.on('join room', function(no){
       console.log(no);
@@ -45,7 +50,7 @@ module.exports = function(server, session){
         }
       }
       lobby.emit('join room', no);
-    })
+    });
 
     socket.on('delete room', function(no){
       for(let i = 0; i < rooms.length; i++){
@@ -54,31 +59,31 @@ module.exports = function(server, session){
         }
       }
       lobby.emit('del room', no);
-    })
+    });
   });
 
-  io.on('connection', function(socket){ // if client connected
+  chat.on('connection', function(socket){ // if client connected
     socket.handshake.session.save();
 
     let name;
 
     if(socket.handshake.session.user === undefined){
       count++;
-      io.to(socket.id).emit('redirection', '/');
+      chat.to(socket.id).emit('redirection', '/');
     }
     else{
       name = socket.handshake.session.user.name
       count++;
       console.log('user connected: ', name , getToday());
 
-      io.emit('receive message', name + ' joined the chat');
-      io.emit('receive message', count + ' people are chatting.');
+      chat.emit('receive message', name + ' joined the chat');
+      chat.emit('receive message', count + ' people are chatting.');
     }
 
     socket.on('disconnect', function(){ // if client disconect
       count--;
-      io.emit('receive message', name + ' left the chat');
-      io.emit('receive message', count + ' people are chatting.');
+      chat.emit('receive message', name + ' left the chat');
+      chat.emit('receive message', count + ' people are chatting.');
       console.log('user disconnected: ', name , getToday());
       console.log(count + ' people are chatting.');
     });
@@ -87,11 +92,10 @@ module.exports = function(server, session){
       if (text != ''){
         var msg = name + ' : ' + text;
         console.log(msg , getToday());
-        io.emit('receive message', msg);
+        chat.emit('receive message', msg);
       }
     });
   });
-  return [io, lobby];
 }
 
 function getToday(){

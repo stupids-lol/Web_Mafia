@@ -24,7 +24,6 @@ const index = require('./routers/index.js');
 const register = require('./routers/register.js');
 const chat = require('./routers/chat.js');
 const lobby = require('./routers/lobby.js');
-const logout = require('./routers/logout.js');
 
 
 app.use(express.static(__dirname + '/'));
@@ -38,7 +37,6 @@ app.use('/', index);
 app.use('/register', register);
 app.use('/chat', chat);
 app.use('/lobby', lobby);
-app.use('/logout', logout);
 
 app.all('*',
     function (req, res) {

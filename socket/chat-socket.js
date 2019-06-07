@@ -2,7 +2,7 @@
 
 let count = 0; //user count
 
-module.exports = function(chat, socket, sharedsession){
+module.exports = function(chat, sharedsession, session){
   chat.use(sharedsession(session), {
     autoSave:true
   });
@@ -41,4 +41,9 @@ module.exports = function(chat, socket, sharedsession){
       }
     });
   });
+}
+
+function getToday(){
+  var date = new Date();
+  return date.getFullYear() +'.'+ (date.getMonth()+1) +'.'+ date.getDate() +' '+ date.getHours() +':'+ date.getMinutes() +':'+date.getSeconds();
 }

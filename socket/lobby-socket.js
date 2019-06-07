@@ -3,7 +3,7 @@
 let num = 1;
 let rooms = [];
 
-module.exports = function(lobby, socket, sharedsession){
+module.exports = function(lobby, sharedsession, session){
 
   lobby.use(sharedsession(session), {
     autoSave:true

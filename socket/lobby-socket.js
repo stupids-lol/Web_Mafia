@@ -28,13 +28,10 @@ module.exports = function(lobby, sharedsession, session){
 
     socket.on('join room', function(no){
       console.log(no);
-      for(let i = 0; i < rooms.length; i++){
-        if(rooms[i].no == no){
-          socket.join(no);
-          console.log('socket.join',no);
-        }
-      }
-      lobby.emit('join room', no);
+      console.log('socket.join',no);
+      socket.handshake.session.user.room = no;
+      console.log(socket.handshake.session.user);
+      socket.handshake.session.save();
     });
     socket.on('delete room', function(no){
       for(let i = 0; i < rooms.length; i++){

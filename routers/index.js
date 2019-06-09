@@ -28,6 +28,7 @@ router.post('/', function(req, res){
       req.session.user ={
         id: email,
         name: result[0].name,
+        room: -1,
         authorized: true
       };
       res.json({result: 'success'});

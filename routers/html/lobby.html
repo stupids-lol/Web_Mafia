@@ -34,7 +34,6 @@
       </tbody>
       <button onclick='createRoom()'>방 만들기</button>
       <button onclick='deleteRoom()'>방 지우기</button>
-      <button onclick='joinRoom()'>참가하기</button>
       <button type="button" class="logout" onclick="javascript:window.location.href = '/logout'">logout</button>
       <button onclick="goChat()">chat</buuton>
     </table>
@@ -78,7 +77,8 @@
         socket.emit('delete room', no);
       }
       function joinRoom(no){
-        alert(no);
+        socket.emit('join room', no);
+        goChat();
       }
       function goChat(){
         document.location = '/chat';

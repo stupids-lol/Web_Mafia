@@ -18,7 +18,7 @@ const session = expressSession({
   saveUninitialized:true
 });
 app.use(session);
-const io = require('./socket/io.js')(http, session);
+const io = require('./socket/socket.js')(http, session);
 
 const index = require('./routers/index.js');
 const register = require('./routers/register.js');

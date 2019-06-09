@@ -9,35 +9,42 @@ module.exports = function(chat, sharedsession, session){
 
   chat.on('connection', function(socket){ // if client connected
     socket.handshake.session.save();
-
     let name;
-
+    console.log(socket.handshake.session.user);
     if(socket.handshake.session.user === undefined){
       count++;
-      chat.to(socket.id).emit('redirection', '/');
+      socket.emit('redirection', '/');
+    }
+    else if(socket.handshake.session.user.room === -1){
+      count++;
+      socket.emit('redirection', '/');
     }
     else{
       name = socket.handshake.session.user.name
       count++;
       console.log('user connected: ', name , getToday());
 
-      chat.emit('receive message', name + ' joined the chat');
-      chat.emit('receive message', count + ' people are chatting.');
+      socket.join(socket.handshake.session.user.room);
+
+      chat.to(socket.handshake.session.user.room).emit('receive message', name + ' joined the chat');
+      chat.to(socket.handshake.session.user.room).emit('receive message', count + ' people are chatting.');
     }
 
     socket.on('disconnect', function(){ // if client disconect
       count--;
-      chat.emit('receive message', name + ' left the chat');
-      chat.emit('receive message', count + ' people are chatting.');
+      chat.to(socket.handshake.session.user.room).emit('receive message', name + ' left the chat');
+      chat.to(socket.handshake.session.user.room).emit('receive message', count + ' people are chatting.');
       console.log('user disconnected: ', name , getToday());
       console.log(count + ' people are chatting.');
+      socket.handshake.session.user.room = -1;
+      socket.handshake.session.save();
     });
 
     socket.on('send message', function(text){ // if client message sned
       if (text != ''){
         var msg = name + ' : ' + text;
         console.log(msg , getToday());
-        chat.emit('receive message', msg);
+        chat.to(socket.handshake.session.user.room).emit('receive message', msg);
       }
     });
   });

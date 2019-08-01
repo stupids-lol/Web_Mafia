@@ -15,6 +15,7 @@
           <th style="overflow: hidden">방 이름</th>
           <th>인원</th>
           <th>방장</th>
+          <th>입장</th>
         </tr>
       </thead>
       <tbody>
@@ -27,12 +28,12 @@
             <td>{{ room.name }}</td>
             <td>{{ room.nop }}</td>
             <td>{{ room.leader }}</td>
+            <td><button v-on:click="joinRoom(room.no)">입장</button></td>
           </tr>
         </template>
       </tbody>
       <button onclick='createRoom()'>방 만들기</button>
       <button onclick='deleteRoom()'>방 지우기</button>
-      <button onclick='joinRoom()'>참가하기</button>
       <button type="button" class="logout" onclick="javascript:window.location.href = '/logout'">logout</button>
     </table>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -74,9 +75,12 @@
         let no = prompt("Input room's nubmer");
         socket.emit('delete room', no);
       }
-      function joinRoom(){
-        let no = prompt("Input room's nubmer");
+      function joinRoom(no){
         socket.emit('join room', no);
+        goChat();
+      }
+      function goChat(){
+        document.location = '/chat';
       }
     </script>
   </body>

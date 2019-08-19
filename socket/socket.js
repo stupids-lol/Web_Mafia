@@ -102,13 +102,12 @@ module.exports = function(server, session){
         return a[Math.floor(Math.random() * a.length)];
       }
 
-      socket.join(room);
       let data = {
         role: randomItem(role)
       }
       socket.emit('role', [data]);
 
-      console.log(data);
+      socket.join(room);
 
       chat.to(room).emit('receive message', name + ' joined the chat');
       chat.to(room).emit('receive message', count + ' people are chatting.');

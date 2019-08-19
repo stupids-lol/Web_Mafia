@@ -18,8 +18,8 @@
       <input id="message" class="message" type="text">
       <input type="submit" class="chat" value="chat"/>
       <button type="button" class="logout" onclick="javascript:window.location.href = '/logout'">logout</button>
-      <p>{{ user[0].role }}</p>
     </form>
+    <p id="role">{{ user[0].role }}</p>
     <div id="box" class="box">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -47,8 +47,8 @@
         }
       });
 
-      let chat = new Vue({
-        el: '#chat',
+      let role = new Vue({
+        el: '#role',
         data: {
           user: rms
         }

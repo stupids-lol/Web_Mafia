@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const db = {
   host: 'localhost',
-  port: 34343,
+  port: 3306,
   user: 'mafia',
   password: 'sunrin',
   database: 'webmafia'

@@ -101,7 +101,7 @@ module.exports = function(server, session){
         chat.to(room).emit('receive message', msg);
       }
     });
-  }
+  });
 };
 
 function getToday(){

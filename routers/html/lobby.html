@@ -61,6 +61,24 @@
           }
         }
       });
+      socket.on('join update', function(no){
+        console.log(no)
+        for(let i = 0; i < rms.length; i++){
+          if (rms[i].no == no){
+            rms[i].nop++;
+            break;
+          }
+        }
+      })
+      socket.on('leave update', function(no){
+        console.log(no)
+        for(let i = 0; i < rms.length; i++){
+          if (rms[i].no == no){
+            rms[i].nop--;
+            break;
+          }
+        }
+      })
       let list = new Vue({
         el: '#list',
         data: {

@@ -36,7 +36,13 @@ module.exports = function(server, session){
       console.log('socket.join',no);
       socket.handshake.session.user.room = no;
       socket.handshake.session.user.join = no;
-      lobby.emit('join update', no)
+      lobby.emit('join update', no);
+      for(let i =0; i < rooms.length; i++){
+        if (rooms[i].no === no){
+          rooms[i].nop++;
+          break;
+        }
+      }
       console.log(socket.handshake.session.user);
       socket.handshake.session.save();
     });
@@ -91,6 +97,14 @@ module.exports = function(server, session){
       console.log('user disconnected: ', name , getToday());
       console.log(count + ' people are chatting.');
       socket.handshake.session.user.room = -1;
+      lobby.emit('leave update', socket.handshake.session.user.join);
+      for(let i = 0; i < rooms.length; i++){
+        if (rooms[i].no == socket.handshake.session.user.join){
+          rooms[i].nop--;
+          break;
+        }
+      }
+      socket.handshake.session.user.join = 0;
       socket.handshake.session.save();
     });
 

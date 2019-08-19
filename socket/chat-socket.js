@@ -1,8 +1,6 @@
 //chat-socket.js
 
 let count = 0;  //user count
-let num = 1;    //room number
-let rooms = []; //room list
 
 module.exports = function(chat, sharedsession, session){
   chat.use(sharedsession(session), {
@@ -39,8 +37,7 @@ module.exports = function(chat, sharedsession, session){
       chat.to(room).emit('receive message', count + ' people are chatting.');
       console.log('user disconnected: ', name , getToday());
       console.log(count + ' people are chatting.');
-      if (socket.handshake.session.user.join)socket.handshake.session.user.join = 0;
-      else socket.handshake.session.user.room = -1;
+      socket.handshake.session.user.room = -1;
       socket.handshake.session.save();
     });
 
@@ -51,38 +48,8 @@ module.exports = function(chat, sharedsession, session){
         chat.to(room).emit('receive message', msg);
       }
     });
-
-    socket.on('create room', function(name){
-      let data = {
-        no: num,
-        name: name,
-        nop: 0,
-        leader: socket.handshake.session.user.name
-      }
-      num++;
-      rooms.push(data);
-      chat.emit('new room', [data]);
-    });
-
-    socket.on('join room', function(no){
-      console.log(no);
-      console.log('socket.join',no);
-      socket.handshake.session.user.room = no;
-      socket.handshake.session.user.join = 1;
-      console.log(socket.handshake.session.user);
-      socket.handshake.session.save();
-    });
-
-    socket.on('delete room', function(no){
-      for(let i = 0; i < rooms.length; i++){
-        if (rooms[i].no == no){
-          rooms.splice(i,1);
-        }
-      }
-      chat.emit('del room', no);
-    });
-  });
-}
+  }
+)}
 
 function getToday(){
   var date = new Date();

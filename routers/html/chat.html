@@ -18,11 +18,14 @@
       <input id="message" class="message" type="text">
       <input type="submit" class="chat" value="chat"/>
       <button type="button" class="logout" onclick="javascript:window.location.href = '/logout'">logout</button>
+      <p>{{ user[0].role }}</p>
     </form>
     <div id="box" class="box">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.js"></script>
     <script>
+      let rms = [];
       const socket = io('/chat');
       $('#chat').on('submit', function(e){
         socket.emit('send message', $('#message').val());
@@ -36,7 +39,20 @@
       });
       socket.on('redirection', function(path){
         window.location.href = path;
-      })
+      });
+      socket.on('role', function(data){
+        for(let i = 0; i < data.length; i++){
+          console.log(data[i]);
+          rms.push(data[i]);
+        }
+      });
+
+      let chat = new Vue({
+        el: '#chat',
+        data: {
+          user: rms
+        }
+      });
 
     </script>
   </body>

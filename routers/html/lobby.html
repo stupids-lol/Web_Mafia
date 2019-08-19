@@ -57,7 +57,7 @@
       socket.on('del room', function(no){
         for(let i = 0; i < rms.length; i++){
           if (rms[i].no == no){
-            +rms.splice(i,1);
+            rms.splice(i,1);
           }
         }
       });

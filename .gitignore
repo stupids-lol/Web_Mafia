@@ -1,2 +1,2 @@
-# json 파일도 커밋 안함
-package-lock.json
+# 모듈은 커밋 안함
+node_modules

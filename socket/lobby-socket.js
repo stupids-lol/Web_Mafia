@@ -30,6 +30,8 @@ module.exports = function(lobby, sharedsession, session){
       console.log(no);
       console.log('socket.join',no);
       socket.handshake.session.user.room = no;
+      socket.handshake.session.user.join = no;
+      lobby.emit('join update', no)
       console.log(socket.handshake.session.user);
       socket.handshake.session.save();
     });

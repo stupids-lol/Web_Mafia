@@ -96,9 +96,15 @@ module.exports = function(server, session){
       count++;
       console.log('user connected: ', name , getToday());
 
+      let role = new Array('Mafia', 'Sky');
+
+      function randomItem(a) {
+        return a[Math.floor(Math.random() * a.length)];
+      }
+
       socket.join(room);
       let data = {
-        role: 1
+        role: randomItem(role)
       }
       socket.emit('role', [data]);
 

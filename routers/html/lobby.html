@@ -40,7 +40,7 @@
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
       let rms = [];
-      const socket = io('/chatlobby');
+      const socket = io('/chat');
       socket.on('new room', function(data){
         for(let i = 0; i < data.length; i++){
           rms.push(data[i]);

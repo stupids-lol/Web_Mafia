@@ -68,15 +68,6 @@ module.exports = function(server, session){
       socket.handshake.session.save();
     });
 
-
-    socket.on('delete room', function(no){
-      for(let i = 0; i < rooms.length; i++){
-        if (rooms[i].no == no){
-          rooms.splice(i,1);
-        }
-      }
-      lobby.emit('del room', no);
-    });
   });
 
 

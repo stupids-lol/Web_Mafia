@@ -33,7 +33,6 @@
         </template>
       </tbody>
       <button onclick='createRoom()'>방 만들기</button>
-      <button onclick='deleteRoom()'>방 지우기</button>
       <button type="button" class="logout" onclick="javascript:window.location.href = '/logout'">logout</button>
     </table>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -51,13 +50,6 @@
           if(rms[i].no == no){
             socket.join(no);
             console.log('socket.join',no);
-          }
-        }
-      });
-      socket.on('del room', function(no){
-        for(let i = 0; i < rms.length; i++){
-          if (rms[i].no == no){
-            rms.splice(i,1);
           }
         }
       });

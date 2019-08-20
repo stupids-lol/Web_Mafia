@@ -1,4 +1,4 @@
-//io.js
+//socket.js
 
 let num = 1;
 let rooms = [];
@@ -28,12 +28,23 @@ module.exports = function(server, session){
       let data = {
         no: num,
         name: name,
-        nop: 0,
+        nop: 1,
         leader: socket.handshake.session.user.name
       }
 
+      const no = num;
+
       num++;
       rooms.push(data);
+
+      console.log(no);
+      console.log('socket.join',no);
+      socket.handshake.session.user.room = no;
+      socket.handshake.session.user.join = no;
+
+      console.log(socket.handshake.session.user);
+      socket.handshake.session.save();
+
       lobby.emit('new room', [data]);
 
     });
@@ -51,6 +62,7 @@ module.exports = function(server, session){
           break;
         }
       }
+
 
       console.log(socket.handshake.session.user);
       socket.handshake.session.save();
@@ -124,6 +136,10 @@ module.exports = function(server, session){
       for(let i = 0; i < rooms.length; i++){
         if (rooms[i].no == socket.handshake.session.user.join){
           rooms[i].nop--;
+          if(rooms[i].nop === 0){
+            lobby.emit('del room', rooms[i].no);
+            rooms.splice(i,1);
+          }
           break;
         }
       }

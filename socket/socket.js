@@ -28,8 +28,9 @@ module.exports = function(server, session){
       let data = {
         no: num,
         name: name,
-        nop: 1,
-        leader: socket.handshake.session.user.name
+        nop: 0,
+        leader: socket.handshake.session.user.name,
+        player: []
       }
 
       const no = num;
@@ -54,15 +55,6 @@ module.exports = function(server, session){
       console.log('socket.join',no);
       socket.handshake.session.user.room = no;
       socket.handshake.session.user.join = no;
-      lobby.emit('join update', no);
-
-      for(let i =0; i < rooms.length; i++){
-        if (rooms[i].no === no){
-          rooms[i].nop++;
-          break;
-        }
-      }
-
 
       console.log(socket.handshake.session.user);
       socket.handshake.session.save();
@@ -96,6 +88,17 @@ module.exports = function(server, session){
     else{
       name = socket.handshake.session.user.name;
       room = socket.handshake.session.user.room;
+
+      lobby.emit('join update', room);
+
+      for(let i =0; i < rooms.length; i++){
+        if (rooms[i].no === room){
+          rooms[i].nop++;
+          rooms[i].player.push(socket.id);
+          break;
+        }
+      }
+
       count++;
       console.log('user connected: ', name , getToday());
 
@@ -132,6 +135,14 @@ module.exports = function(server, session){
             lobby.emit('del room', rooms[i].no);
             rooms.splice(i,1);
           }
+          else{
+            for(let j = 0; j < rooms[i].length; j++){
+              if(rooms[i].player[j] == socket.id){
+                lobby.emit('leave update');
+                rooms[i].player.splice(j,1);
+              }
+            }
+          }
           break;
         }
       }
@@ -146,6 +157,43 @@ module.exports = function(server, session){
         chat.to(room).emit('receive message', msg);
       }
     });
+
+
+
+    /*
+
+    chat
+    game
+
+    */
+    socket.on('game start', function(){
+      let room = socket.handshake.session.user.room;
+      let player;
+
+      for(let i = 0; i < rooms.length; i++){
+        if(rooms[i].no == room){
+          player = rooms[i].player;
+          break;
+        }
+      }
+
+      let jobs = [];
+      for(let i = 0; i < player.length / 4 + 1; i++){
+        jobs.push(1);
+      }
+      for(let i = player.length / 4 + 1; i < player.length; i++){
+        jobs.push(0);
+      }
+
+      jobs.sort(function(){return 0.5-Math.random()});
+      console.log(player)
+
+      for (let i = 0; i < player.length; i++){
+        io.to(player[i]).emit('set job', jobs[i]);
+      }
+
+    });
+
   });
 };
 

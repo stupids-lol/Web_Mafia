@@ -21,6 +21,7 @@
       <button type="button" class="lobby" onclick="javascript:window.location.href = '/lobby'">exit</button>
       <button type="button" class="start" onclick='start()'>start</button>
     </form>
+    <p id="job"></p>
     <div id="box" class="box">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -41,11 +42,18 @@
       socket.on('redirection', function(path){
         window.location.href = path;
       });
+      socket.on('set job', function(job){
+        console.log(job);
+        if(job == 0){
+          $('#job').val('citizen');
+        }
+        else{
+          $('#job').val('mafia');
+        }
+      });
 
       function start(){
-        let name = prompt('Input room name');
-        socket.emit('create room', name);
-        goChat();
+        socket.emit('game start');
       }
 
     </script>

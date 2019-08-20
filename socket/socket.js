@@ -154,6 +154,7 @@ module.exports = function(server, session){
       if (text != ''){
         var msg = name + ' : ' + text;
         console.log(msg , getToday());
+        console.log(socket.id)
         chat.to(room).emit('receive message', msg);
       }
     });
@@ -186,10 +187,11 @@ module.exports = function(server, session){
       }
 
       jobs.sort(function(){return 0.5-Math.random()});
-      console.log(player)
+      console.log(player);
+      console.log(jobs[0]);
 
       for (let i = 0; i < player.length; i++){
-        io.to(player[i]).emit('set job', jobs[i]);
+        chat.to(player[i]).emit('set job', jobs[i]);
       }
 
     });

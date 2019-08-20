@@ -108,7 +108,6 @@ module.exports = function(server, session){
       let data = {
         role: randomItem(role)
       }
-      socket.emit('role', [data]);
 
       socket.join(room);
 

@@ -122,7 +122,9 @@ module.exports = function(server, session){
       chat.to(room).emit('receive message', count + ' people are chatting.');
       console.log('user disconnected: ', name , getToday());
       console.log(count + ' people are chatting.');
-      socket.handshake.session.user.room = -1;
+      if(socket.handshake.session.user){
+        socket.handshake.session.user.room = -1;
+      }
       lobby.emit('leave update', socket.handshake.session.user.join);
       for(let i = 0; i < rooms.length; i++){
         if (rooms[i].no == socket.handshake.session.user.join){

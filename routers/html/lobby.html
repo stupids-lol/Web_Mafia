@@ -67,6 +67,9 @@
         for(let i = 0; i < rms.length; i++){
           if (rms[i].no == no){
             rms[i].nop--;
+            if(rms[i].nop){
+              rms.splice(i,1);
+            }
             break;
           }
         }

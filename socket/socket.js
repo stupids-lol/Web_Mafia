@@ -179,16 +179,13 @@ module.exports = function(server, session){
       }
 
       let jobs = [];
-      for(let i = 0; i < player.length / 4 + 1; i++){
-        jobs.push(1);
-      }
-      for(let i = player.length / 4 + 1; i < player.length; i++){
+      jobs.push(1);
+      if(player.length >= 4)jobs.push(1);
+      for(let i = jobs.length; i < player.length; i++){
         jobs.push(0);
       }
 
       jobs.sort(function(){return 0.5-Math.random()});
-      console.log(player);
-      console.log(jobs[0]);
 
       for (let i = 0; i < player.length; i++){
         chat.to(player[i]).emit('set job', jobs[i]);

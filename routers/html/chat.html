@@ -45,10 +45,10 @@
       socket.on('set job', function(job){
         console.log(job);
         if(job == 0){
-          $('#job').val='citizen';
+          $('#job').text('citizen');
         }
         else{
-          $('#job').val='mafia';
+          $('#job').text('mafia');
         }
       });
 

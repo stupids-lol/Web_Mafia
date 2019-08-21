@@ -110,6 +110,7 @@ html {
 
 .view{
     overflow: hidden;
+ 
 }
 .scrollBlind{
     overflow-y: scroll;
@@ -134,3 +135,5 @@ html {
 #chatLog li:nth-child(odd) {
   background: #eee;
 }
+
+

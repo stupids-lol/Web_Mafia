@@ -136,4 +136,22 @@ html {
   background: #eee;
 }
 
+.making-box{
+  font-size: 200%;
+ 
+}
 
+.room-table{
+  
+}
+th{
+  border-right: #323232 1px solid;
+}
+#list{
+  line-height: 200%;
+  letter-spacing: 2px;
+  
+}
+.line{
+  
+}

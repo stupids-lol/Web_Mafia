@@ -146,12 +146,23 @@ html {
 }
 th{
   border-right: #323232 1px solid;
+  padding-right: 2px;
+  text-align: center;
+
+ 
 }
 #list{
   line-height: 200%;
   letter-spacing: 2px;
+  width: 100%;
   
 }
 .line{
   
+}
+.room-info{
+  text-align: center;
+}
+td{
+  text-align: center;
 }

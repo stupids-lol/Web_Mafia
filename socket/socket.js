@@ -3,6 +3,8 @@
 let num = 1;
 let rooms = [];
 let count = 0;
+let day = 0;
+let time = 3000;
 
 module.exports = function(server, session){
   const io = require('socket.io')(server);
@@ -190,8 +192,20 @@ module.exports = function(server, session){
       for (let i = 0; i < player.length; i++){
         chat.to(player[i]).emit('set job', jobs[i]);
       }
-
+      setInterval(day_timer,time);
     });
+
+    function day_timer() {
+      if(day == 0){
+        chat.to(room).emit('set day', day);
+        day = 1;
+        time = 5000;
+      }else{
+        chat.to(room).emit('set day', day);
+        day = 0;
+        time = 3000;
+      }
+    }
 
   });
 };

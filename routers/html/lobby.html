@@ -14,6 +14,37 @@
           <button type="button" class="login-button" onclick="javascript:window.location.href = '/logout'">logout</button>
         </div>
         </table>
+
+      <hr class="line">
+  
+    <table id='list'>
+      <thead>
+        <tr>
+          <th>번호</th>
+          <th style="overflow: hidden">이름</th>
+          <th>인원</th>
+          <th>방장</th>
+          <th>입장</th>
+          
+        </tr>
+
+      </thead>
+      <tbody>
+        <tr v-if='rooms.length === 0'>
+          
+          <td colspan="4">생성된 채팅방이 없습니다</td>
+        </tr>
+        <template v-for='room in rooms' class="room-table">
+          <tr>
+            <td>{{ room.no }}</td>
+            <td>{{ room.name }}</td>
+            <td>{{ room.nop }}</td>
+            <td>{{ room.leader }}</td>
+            <td><button v-on:click="joinRoom(room.no)"class="login-button">입장</button></td>
+          </tr>
+        </template>
+      
+      </tbody>
       <script src="https://cdn.jsdelivr.net/npm/vue"></script>
       <script src="/socket.io/socket.io.js"></script>
       <script type="text/javascript">
@@ -76,37 +107,6 @@
           document.location = '/chat';
         }
       </script>
-      <hr class="line">
-  
-    <table id='list'>
-      <thead>
-        <tr>
-          <th>번호</th>
-          <th style="overflow: hidden">이름</th>
-          <th>인원</th>
-          <th>방장</th>
-          <th>입장 </th>
-          
-        </tr>
-
-      </thead>
-      <tbody>
-        <tr v-if='rooms.length === 0'>
-          
-          <td colspan="4">생성된 채팅방이 없습니다</td>
-        </tr>
-        <template v-for='room in rooms' class="room-table">
-          <tr>
-            <td>{{ room.no }}</td>
-            <td>{{ room.name }}</td>
-            <td>{{ room.nop }}</td>
-            <td>{{ room.leader }}</td>
-            <td><button v-on:click="joinRoom(room.no)"class="login-button">입장</button></td>
-          </tr>
-        </template>
-      
-      </tbody>
-      
       
   </body>
 </html>

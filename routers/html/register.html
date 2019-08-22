@@ -1,19 +1,23 @@
 <!DOCTYPE html>
-<html>
-<head>
+
+<div class='form-register'>
+  <head>
     <meta charset="utf-8">
     <title>JOIN</title>
     <link rel="stylesheet" href="../../statics/css/style.css">
+    <link rel="stylesheet" href="../../statics/css/register.css">
 </head>
-    <body>
-    <h1>Join my website! </h1>
-    <form action="/register" method="post">
-        email : <input type="text" name="email"><br>
-        name : <input type="text" name="name"><br>
-        password : <input type="password" name="password"><br>
+  <form>
+    <h1>register</h1>
+    <div style="text-align:center">
+    <input class='first' type='text' placeholder='Enter Username'>
 
-        <input type="submit">
-    </form>
+    <input class='second' type='pasword' placeholder='Enter Password'>
 
-    </body>
-</html>
+    <input class='third' type='password' placeholder='Confirm password'>
+
+    <input class='forth' type='email' placeholder='Enter email'>
+  </div>
+    <button class='btn'><i class='fa fa-user-plus'></i> Create my account</button>
+  </form>
+</div>

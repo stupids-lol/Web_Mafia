@@ -136,6 +136,12 @@ html {
   background: #eee;
 }
 
+
+
+.lobby-back{
+  background-color: #404040;
+  color: #ccc;
+}
 .making-box{
   font-size: 200%;
  
@@ -145,6 +151,8 @@ html {
   
 }
 th{
+  color: #ccc;
+  background-color: #323232;
   border-right: #323232 1px solid;
   padding-right: 2px;
   text-align: center;
@@ -163,6 +171,17 @@ th{
 .room-info{
   text-align: center;
 }
+
 td{
   text-align: center;
+}
+
+.lobby-button{
+  background-color: #323232;
+  color:#fff;
+  height: 50px;
+  width: 150px;
+  font-size: 25px;
+  font-family: "seoulNamsan","Helvetica", "Arial";
+
 }

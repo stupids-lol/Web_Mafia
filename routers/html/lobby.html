@@ -7,11 +7,11 @@
     <title>Room list</title>
     <link rel="stylesheet" href="../../statics/css/style.css">
   </head>
-  <body>
+  <body class="lobby-back">
 
       <div class="making-box">
-          <button onclick='createRoom()' class="login-button">방 만들기</button>
-          <button type="button" class="login-button" onclick="javascript:window.location.href = '/logout'">logout</button>
+          <button onclick='createRoom()' class="lobby-button">Make Room</button>
+          <button type="button" class="lobby-button" onclick="javascript:window.location.href = '/logout'">Logout</button>
         </div>
         </table>
 
@@ -40,7 +40,7 @@
             <td>{{ room.name }}</td>
             <td>{{ room.nop }}</td>
             <td>{{ room.leader }}</td>
-            <td><button v-on:click="joinRoom(room.no)"class="login-button">입장</button></td>
+            <td><button v-on:click="joinRoom(room.no)"class="lobby-button">Enter</button></td>
           </tr>
         </template>
       
@@ -106,7 +106,9 @@
         function goChat(){
           document.location = '/chat';
         }
+        
       </script>
+      <hr>
       
   </body>
 </html>

@@ -8,94 +8,105 @@
     <link rel="stylesheet" href="../../statics/css/style.css">
   </head>
   <body>
+
+      <div class="making-box">
+          <button onclick='createRoom()' class="login-button">방 만들기</button>
+          <button type="button" class="login-button" onclick="javascript:window.location.href = '/logout'">logout</button>
+        </div>
+        </table>
+      <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script type="text/javascript">
+        let rms = [];
+        const socket = io('/chatlobby');
+        socket.on('new room', function(data){
+          for(let i = 0; i < data.length; i++){
+            rms.push(data[i]);
+          }
+        });
+        socket.on('join room', function(no){
+          for(let = 0; i < rms.length; i++){
+            if(rms[i].no == no){
+              socket.join(no);
+              console.log('socket.join',no);
+            }
+          }
+        });
+        socket.on('join update', function(no){
+          console.log(no)
+          for(let i = 0; i < rms.length; i++){
+            if (rms[i].no == no){
+              rms[i].nop++;
+              break;
+            }
+          }
+        })
+        socket.on('leave update', function(no){
+          console.log(no)
+          for(let i = 0; i < rms.length; i++){
+            if (rms[i].no == no){
+              rms[i].nop--;
+              if(rms[i].nop){
+                rms.splice(i,1);
+              }
+              break;
+            }
+          }
+        })
+        let list = new Vue({
+          el: '#list',
+          data: {
+            rooms: rms
+          }
+        });
+        function createRoom(){
+          let name = prompt('Input room name');
+          socket.emit('create room', name);
+          goChat();
+        }
+        function deleteRoom(){
+          let no = prompt("Input room's nubmer");
+          socket.emit('delete room', no);
+        }
+        function joinRoom(no){
+          socket.emit('join room', no);
+          goChat();
+        }
+        function goChat(){
+          document.location = '/chat';
+        }
+      </script>
+      <hr class="line">
+  
     <table id='list'>
       <thead>
         <tr>
-          <th>방 번호</th>
-          <th style="overflow: hidden">방 이름</th>
+          <th>번호</th>
+          <th style="overflow: hidden">이름</th>
           <th>인원</th>
           <th>방장</th>
-          <th>입장</th>
+          <th>입장 </th>
+          
         </tr>
+
       </thead>
       <tbody>
         <tr v-if='rooms.length === 0'>
+          
           <td colspan="4">생성된 채팅방이 없습니다</td>
         </tr>
-        <template v-for='room in rooms'>
+        <template v-for='room in rooms' class="room-table">
           <tr>
             <td>{{ room.no }}</td>
             <td>{{ room.name }}</td>
             <td>{{ room.nop }}</td>
             <td>{{ room.leader }}</td>
-            <td><button v-on:click="joinRoom(room.no)">입장</button></td>
+            <td><button v-on:click="joinRoom(room.no)"class="login-button">입장</button></td>
           </tr>
         </template>
+      
       </tbody>
-      <button onclick='createRoom()'>방 만들기</button>
-      <button type="button" class="logout" onclick="javascript:window.location.href = '/logout'">logout</button>
-    </table>
-    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script type="text/javascript">
-      let rms = [];
-      const socket = io('/chatlobby');
-      socket.on('new room', function(data){
-        for(let i = 0; i < data.length; i++){
-          rms.push(data[i]);
-        }
-      });
-      socket.on('join room', function(no){
-        for(let = 0; i < rms.length; i++){
-          if(rms[i].no == no){
-            socket.join(no);
-            console.log('socket.join',no);
-          }
-        }
-      });
-      socket.on('join update', function(no){
-        console.log(no)
-        for(let i = 0; i < rms.length; i++){
-          if (rms[i].no == no){
-            rms[i].nop++;
-            break;
-          }
-        }
-      })
-      socket.on('leave update', function(no){
-        console.log(no)
-        for(let i = 0; i < rms.length; i++){
-          if (rms[i].no == no){
-            rms[i].nop--;
-            if(rms[i].nop){
-              rms.splice(i,1);
-            }
-            break;
-          }
-        }
-      })
-      let list = new Vue({
-        el: '#list',
-        data: {
-          rooms: rms
-        }
-      });
-      function createRoom(){
-        let name = prompt('Input room name');
-        socket.emit('create room', name);
-        goChat();
-      }
-      function deleteRoom(){
-        let no = prompt("Input room's nubmer");
-        socket.emit('delete room', no);
-      }
-      function joinRoom(no){
-        socket.emit('join room', no);
-        goChat();
-      }
-      function goChat(){
-        document.location = '/chat';
-      }
-    </script>
+      
+      
   </body>
 </html>

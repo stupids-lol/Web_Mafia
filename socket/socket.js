@@ -3,6 +3,7 @@
 let num = 1;
 let rooms = [];
 let count = 0;
+let day = 0;
 
 module.exports = function(server, session){
   const io = require('socket.io')(server);
@@ -170,6 +171,7 @@ module.exports = function(server, session){
     socket.on('game start', function(){
       let room = socket.handshake.session.user.room;
       let player;
+      let time = 0;
 
       for(let i = 0; i < rooms.length; i++){
         if(rooms[i].no == room){
@@ -190,8 +192,20 @@ module.exports = function(server, session){
       for (let i = 0; i < player.length; i++){
         chat.to(player[i]).emit('set job', jobs[i]);
       }
-
+      setInterval(day_timer,time);
     });
+
+    function day_timer() {
+      if(day == 0){
+        chat.to(room).emit('set day', day);
+        day = 1;
+        time = 3000;
+      }else{
+        chat.to(room).emit('set day', day);
+        day = 0;
+        time = 5000;
+      }
+    }
 
   });
 };

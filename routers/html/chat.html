@@ -58,7 +58,7 @@
         socket.emit('game start');
       }
 
-      function timer_test(){
+      socket.on('set day', function(day){
         if(day == 0){
           $('#day').text('day');
           day = 1;
@@ -67,7 +67,7 @@
           $('#day').text('night');
           day = 0;
         }
-      }
+      });
 
       setInterval("timer_test()", 5000);
     </script>

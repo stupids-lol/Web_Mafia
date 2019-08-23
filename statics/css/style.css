@@ -11,7 +11,7 @@
 
 html {
   font-family: 'Nanum Gothic Coding';
-  letter-spacing: 5px;
+  letter-spacing: 2px;
   font-size: 200%;
   font-weight: lighter;
   
@@ -43,7 +43,7 @@ html {
   color:white;
   font-weight: lighter;
   text-align: center;
-  letter-spacing: 10px;
+  letter-spacing: 5px;
 }
 .btns{
   text-align: right;

@@ -7,10 +7,10 @@ const crypto = require('crypto');
 
 router.get('/', function(req, res){
   if (req.session.user === undefined){
-    res.sendFile(__dirname + '/html/index.html');
+    return res.sendFile(__dirname + '/html/index.html');
   }
   else {
-    res.redirect('/lobby');
+    return res.redirect('/lobby');
   }
 });
 
@@ -22,7 +22,7 @@ router.post('/', function(req, res){
   db.query(selectSql, params, function(err, result){
     if (err) throw err;
     if (result.length === 0){
-      res.json({result: 'fail'});
+      return res.json({result: 'fail'});
     }
     else if (result[0].password === password){
       req.session.user ={
@@ -31,17 +31,17 @@ router.post('/', function(req, res){
         room: -1,
         authorized: true
       };
-      res.json({result: 'success'});
+      return res.json({result: 'success'});
     }
     else{
-      res.json({result: 'fail'});
+      return res.json({result: 'fail'});
     }
   });
 });
 
 router.get('/logout', function(req, res){
   req.session.destroy();
-  res.redirect('/')
+  return res.redirect('/')
 });
 
 module.exports = router;

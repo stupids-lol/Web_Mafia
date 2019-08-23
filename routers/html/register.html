@@ -11,24 +11,13 @@
       <form action="/register" method="POST">
         <h1 class="title">Join Us</h1>
         <div style="text-align:center">
-          <input class='first' type='text' placeholder='Enter Username'>
-          <input class='second' type='pasword' placeholder='Enter Password'>
-          <input class='third' type='password' placeholder='Confirm password'>
-          <input class='forth' type='email' placeholder='Enter email'>
+          <input class='first' type='text' name='name' placeholder='Enter Username'>
+          <input class='second' type='password' name='password' placeholder='Enter Password'>
+          <input class='third' type='password' name='passwordcheck' placeholder='Confirm password'>
+          <input class='forth' type='email' name='email' placeholder='Enter email'>
         </div>
         <button class='btn' onclick='javascript:register()'><i class='fa fa-user-plus'></i> Create my account</button>
       </form>
     </div>
-    <script>
-    $(document).keypress(function(e){
-      if (e.which == 13) {
-        register();
-        return false;
-      }
-    });
-    function register(){
-
-    }
-    </script>
   </body>
 </html>

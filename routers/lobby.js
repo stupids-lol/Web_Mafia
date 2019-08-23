@@ -5,10 +5,10 @@ const router = express.Router();
 
 router.get('/', function(req, res){
   if (req.session.user === undefined){
-    res.redirect('/');
+    return res.redirect('/');
   }
   else{
-    res.sendFile(__dirname + '/html/lobby.html');
+    return res.sendFile(__dirname + '/html/lobby.html');
   }
 });
 

@@ -29,7 +29,6 @@
     <script src="//code.jquery.com/jquery-1.11.1.js"></script>
     <script>
       let rms = [];
-      let day = 0;
       const socket = io('/chat');
       $('#chat').on('submit', function(e){
         socket.emit('send message', $('#message').val());
@@ -45,7 +44,6 @@
         window.location.href = path;
       });
       socket.on('set job', function(job){
-        console.log(job);
         if(job == 0){
           $('#job').text('citizen');
         }
@@ -54,22 +52,24 @@
         }
       });
 
-      function start(){
-        socket.emit('game start');
-      }
-
       socket.on('set day', function(day){
+        console.log(day);
         if(day == 0){
+          console.log(day)
           $('#day').text('day');
           day = 1;
         }
         else{
+          console.log(day)
           $('#day').text('night');
           day = 0;
         }
       });
 
-      setInterval("timer_test()", 5000);
+      function start(){
+        socket.emit('game start');
+      }
+
     </script>
   </body>
 </html>

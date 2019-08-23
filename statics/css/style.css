@@ -1,17 +1,19 @@
 /* style.css */
-/*글씨체 불러오기*/
+/*글씨체 불러오기
 @font-face{ 
   font-family: 'Nanum Gothic Coding', monospace;
-  /*src:url('../../public/fonts/SeoulNamsanL.ttf') format('truetype');*/
+  src:url('../../public/fonts/SeoulNamsanL.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   
-}
+}*/
 /* 공통부분 */
+
 html {
-  font-family: 'Nanum Gothic Coding', monospace;
-  letter-spacing: 0px;
+  font-family: 'Nanum Gothic Coding';
+  letter-spacing: 5px;
   font-size: 200%;
+  font-weight: lighter;
   
 }
 
@@ -39,6 +41,9 @@ html {
 
 .center_word{
   color:white;
+  font-weight: lighter;
+  text-align: center;
+  letter-spacing: 10px;
 }
 .btns{
   text-align: right;
@@ -137,7 +142,7 @@ html {
   background: #eee;
 }
 
-
+/* 로비 부분 */
 
 .lobby-back{
   background-color: #404040;
@@ -157,6 +162,7 @@ th{
   border-right: #323232 1px solid;
   padding-right: 2px;
   text-align: center;
+  font-weight: lighter;
 
  
 }
@@ -183,6 +189,6 @@ td{
   height: 50px;
   width: 150px;
   font-size: 25px;
-  font-family: "seoulNamsan","Helvetica", "Arial";
+  font-family: 'Nanum Gothic Coding', monospace;
 
 }

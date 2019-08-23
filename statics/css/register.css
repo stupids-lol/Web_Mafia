@@ -1,9 +1,5 @@
 /* Start Some Resets Classes */
-@font-face {
-  font-family: 'Nanum Gothic Coding', monospace;
-  font-weight: normal;
-  font-style: normal;
-}
+
 :before,
 :after {
   -webkit-box-sizing: border-box;
@@ -31,10 +27,10 @@ input,textarea,select {
   width: 50%;
 }
 input:focus,textarea:focus,
-select:focus { border-color: rgba(89, 22, 22, 0.8); box-shadow: 0 1px 1px rgba(89, 22, 22, 0.075) inset, 0 0 8px rgba(89, 22, 22, .6); }
-a { text-decoration: none; color: #591616 }
+select:focus { border-color: rgba(221, 220, 197, 0.8); box-shadow: 0 1px 1px rgba(221, 220, 197, 0.075) inset, 0 0 8px rgba(221, 220, 197, .6); }
+a { text-decoration: none; color: #DDDCC5 }
 a.dec:hover { text-decoration: underline; }
-a:hover { color: #591616; }
+a:hover { color: #DDDCC5 }
 .btn {
   border: none;
   border-radius: 3px;
@@ -50,13 +46,13 @@ a:hover { color: #591616; }
   font-size: 200%;
   font-family: 'Nanum Gothic Coding', monospace;
 }
-.btn-dark               { background-color: #2c3e50; }
-.btn-dark:hover         { background-color: #34495e; }
+.btn-dark               { background-color: #DDDCC5 }
+.btn-dark:hover         { background-color: #DDDCC5 }
 
 .btn-upper              { text-transform: uppercase; font-weight: 600; }
 
-.btn-danger             { background-color: #e74c3c; }
-.btn-danger:hover       { background-color: #c0392b; }
+.btn-danger             { background-color: #DDDCC5 ;}
+.btn-danger:hover       { background-color: #DDDCC5; }
 
 /*Placeholder*/
 ::-webkit-input-placeholder {
@@ -76,7 +72,7 @@ a:hover { color: #591616; }
   opacity: 0.6;
 }
 ::input-placeholder {
-  color: #591616;
+  color: #DDDCC5;
   opacity: 0.6;
 }
 /* End Some Resets Classes */
@@ -98,13 +94,14 @@ form {
 }
 
   .title{
-      color: #FFF;;
+      
       padding-top: 0;
       
       font-size: 400%;
       font-weight: lighter;
       margin-bottom: 100px;
       opacity: 0.5;
+      color: white;
     }
 
     input,
@@ -113,14 +110,14 @@ form {
       height: 70px;
     }
     input {
-      background-color: #591616;
-      border: 1px solid #591616;
+      background-color: #958976;
+      border: 1px solid #6A6A61;
       color: #FFF;
       font-size: 200%;
       font-family: 'Nanum Gothic Coding', monospace;
     }
     input ~ span {
-      background-color: #e74c3c;
+      background-color: #DDDCC5;
       display: none;
       padding: 10px;
       position: absolute;

@@ -1,10 +1,6 @@
 /* Start Some Resets Classes */
 @font-face {
-  font-family: 'seoulNamsan';
-
-  src:url(../../public/fonts/SeoulNamsanL.ttf)format('truetype');
-  
-
+  font-family: 'Nanum Gothic Coding', monospace;
   font-weight: normal;
   font-style: normal;
 }
@@ -21,7 +17,7 @@
 }
 body {
    background-color: #404040;
-   font-family: 'seoulNamsan'
+   font-family: 'Nanum Gothic Coding', monospace;
    }
 input,textarea,select {
   transition: 0.5s;

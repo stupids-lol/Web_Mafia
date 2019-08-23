@@ -1,7 +1,7 @@
 /* style.css */
 /*글씨체 불러오기*/
 @font-face{ 
-  font-family:'seoulNamsan';
+  font-family : 'seoulNamsan';
   src:url('../../public/fonts/SeoulNamsanL.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
@@ -9,7 +9,7 @@
 }
 /* 공통부분 */
 html {
-  font-family : "seoulNamsan","Helvetica", "Arial";
+  font-family : 'seoulNamsan','Helvetica', 'Arial';
   letter-spacing: 0px;
   font-size: 200%;
 }

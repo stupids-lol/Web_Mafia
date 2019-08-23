@@ -200,10 +200,12 @@ module.exports = function(server, session){
         if(day == 0){
           chat.to(room).emit('set day', day);
           day = 1;
+          clearInterval(a);
           a = setInterval(day_timer,5000);
         }else{
           chat.to(room).emit('set day', day);
           day = 0;
+          clearInterval(a);
           a = setInterval(day_timer,1000);
         }
       }

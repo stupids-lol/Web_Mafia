@@ -1,81 +1,66 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
     <title>Login</title>
     <link rel="stylesheet" href="../../statics/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&display=swap&subset=korean" rel="stylesheet">
-</head>
-    <body class="background_jpg">
-
-      <script src="//code.jquery.com/jquery-1.11.1.js"></script>
-      <script type="text/javascript">
-      $(document).keypress(function(e){
-        if (e.which == 13) {
-          user_in();
-          return false;
-        }
-      });
-      function user_in(){
-        let id = $('#usernameInput').val();
-        let password = $('#passwordInput').val();
-
-        $.ajax({
-          type: 'POST',
-          url: '/',
-          data: {
-            email:id,
-            password:password
-          },
-          dataType: 'json',
-          success: function(ret){
-            if (ret.result == 'success'){
-              alert('로그인 성공!');
-              location.replace('/lobby');
-            }
-            else if (ret.result == 'fail'){
-              alert('로그인 실패');
-            }
-            else{
-              alert('서버 에러');
-            }
-          }
-        })
+  </head>
+  <body class="background_jpg">
+    <script src="//code.jquery.com/jquery-1.11.1.js"></script>
+    <script type="text/javascript">
+    $(document).keypress(function(e){
+      if (e.which == 13) {
+        user_in();
+        return false;
       }
+    });
+    function user_in(){
+      let id = $('#usernameInput').val();
+      let password = $('#passwordInput').val();
+
+      $.ajax({
+        type: 'POST',
+        url: '/',
+        data: {
+          email:id,
+          password:password
+        },
+        dataType: 'json',
+        success: function(ret){
+          if (ret.result == 'success'){
+            alert('로그인 성공!');
+            location.replace('/lobby');
+          }
+          else if (ret.result == 'fail'){
+            alert('로그인 실패');
+          }
+          else{
+            alert('서버 에러');
+          }
+        }
+      })
+    }
     </script>
+    <h1 class="center_word">Web_Mafia</h1>
+    <div class="login-form">
+      <div id="image_box">
+        <div id="mafia_image"></div>
+      </div>
 
-    
+      <div class="input_box">
 
-        <h1 class="center_word">Web_Mafia</h1>
-      <div class="login-form">
-        <div id="image_box">
-          <div id="mafia_image"></div>
-        </div>
-
-            <div class="input_box">
-
-                <input type="text" class="form-control" id="usernameInput" name="username" value="" placeholder="E-mail">
-            </div>
-
-            <br>
-
-
-            <div class="input_box">
-
-                <input type="password" class="form-control" id="passwordInput" name="Password" placeholder="password">
-            </div>
-            <br>
-
-            <div class="btns">
-              <input type="button" value="Sign up" class="login-button"  onClick="javascript:location.href='register';"	>
-                <button type="submit" class="login-button" onclick="user_in()">Login</button>
-            </div>
-
+        <input type="text" class="form-control" id="usernameInput" name="username" value="" placeholder="E-mail">
+      </div>
+      <br>
+      <div class="input_box">
+        <input type="password" class="form-control" id="passwordInput" name="Password" placeholder="password">
+      </div>
+      <br>
+      <div class="btns">
+        <input type="button" value="Sign up" class="login-button"  onClick="javascript:location.href='register';"	>
+        <button type="submit" class="login-button" onclick="user_in()">Login</button>
+      </div>
     </div>
-
-
-
-
-
-    </body>
+  </body>
 </html>

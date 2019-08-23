@@ -1,29 +1,34 @@
 <!DOCTYPE html>
-
-<div class='form-register'>
+<html>
   <head>
     <meta charset="utf-8">
     <title>JOIN</title>
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&display=swap&subset=korean" rel="stylesheet">
     <link rel="stylesheet" href="../../statics/css/register.css">
-</head>
-<body>
-  
+  </head>
+  <body>
+    <div class='form-register'>
+      <form action="/register" method="POST">
+        <h1 class="title">Join Us</h1>
+        <div style="text-align:center">
+          <input class='first' type='text' placeholder='Enter Username'>
+          <input class='second' type='pasword' placeholder='Enter Password'>
+          <input class='third' type='password' placeholder='Confirm password'>
+          <input class='forth' type='email' placeholder='Enter email'>
+        </div>
+        <button class='btn' onclick='javascript:register()'><i class='fa fa-user-plus'></i> Create my account</button>
+      </form>
+    </div>
+    <script>
+    $(document).keypress(function(e){
+      if (e.which == 13) {
+        register();
+        return false;
+      }
+    });
+    function register(){
 
-  <form>
-    <h1 class="title">Join Us</h1>
-    <div style="text-align:center">
-    
-    <input class='first' type='text' placeholder='Enter Username'>
-
-    <input class='second' type='pasword' placeholder='Enter Password'>
-
-    <input class='third' type='password' placeholder='Confirm password'>
-
-    <input class='forth' type='email' placeholder='Enter email'>
-  </div>
-    <button class='btn'><i class='fa fa-user-plus'></i> Create my account</button>
-  </form>
-</div>
-
-</body>
+    }
+    </script>
+  </body>
+</html>

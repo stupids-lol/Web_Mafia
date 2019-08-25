@@ -4,6 +4,7 @@ let num = 1;
 let rooms = [];
 let count = 0;
 let idx = {};
+let mafia = {};
 
 
 module.exports = function(server, session){
@@ -184,7 +185,7 @@ module.exports = function(server, session){
 
       let jobs = [];
       jobs.push(1);
-      if(player.length >= 4)jobs.push(1);
+      if(player.length > 4)jobs.push(1);
       for(let i = jobs.length; i < player.length; i++){
         jobs.push(0);
       }

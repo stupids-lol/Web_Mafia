@@ -23,53 +23,62 @@
     </form>
     <p id="job"></p>
     <p id="day"></p>
-    <div id="box" class="box">
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      let rms = [];
-      const socket = io('/chat');
-      $('#chat').on('submit', function(e){
-        socket.emit('send message', $('#message').val());
-        $('#message').val('');
-        $('#message').focus();
-        e.preventDefault();
-      });
-      socket.on('receive message', function(msg){
-        $('#chatLog').append($('<li>').text(msg));
-        $('.scrollBlind').scrollTop($('.scrollBlind')[0].scrollHeight);
-      });
-      socket.on('redirection', function(path){
-        window.location.href = path;
-      });
-      socket.on('set job', function(job){
-        if(job == 0){
-          $('#job').text('citizen');
+    let job;
+    let day;
+    let game = false;
+    let rms = [];
+    const socket = io('/chat');
+    $('#chat').on('submit', function(e){
+      if(game && day === 1){
+        if(job === 1){
+          socket.emit('send mafia message', $('message').val());
         }
-        else{
-          $('#job').text('mafia');
-        }
-      });
-
-      socket.on('set day', function(day){
-        console.log(day);
-        if(day == 0){
-          console.log(day)
-          $('#day').text('day');
-          day = 1;
-        }
-        else{
-          console.log(day)
-          $('#day').text('night');
-          day = 0;
-        }
-      });
-
-      function start(){
-        socket.emit('game start');
       }
+      else {
+        socket.emit('send message', $('#message').val());
+      }
+      $('#message').val('');
+      $('#message').focus();
+      e.preventDefault();
+    });
+    socket.on('receive message', function(msg){
+      $('#chatLog').append($('<li>').text(msg));
+      $('.scrollBlind').scrollTop($('.scrollBlind')[0].scrollHeight);
+    });
+    socket.on('redirection', function(path){
+      window.location.href = path;
+    });
+    socket.on('set job', function(newjob){
+      if(newjob == 0){
+        $('#job').text('citizen');
+      }
+      else{
+        $('#job').text('mafia');
+      }
+      job = newjob;
+    });
+    socket.on('receive mafia message', function(msg){
+      $('#chatLog').append($('<li>').text(msg));
+      $('.scrollBlind').scrollTop($('.scrollBlind')[0].scrollHeight);
+    });
+    socket.on('set day', function(newday){
+      day = newday;
+      if(newday == 0){
+        $('#day').text('day');
+      }
+      else{
+        $('#day').text('night');
+      }
+      game = true;
+    });
 
+    function start(){
+      socket.emit('game start');
+    }
     </script>
   </body>
 </html>

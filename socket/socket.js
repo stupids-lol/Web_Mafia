@@ -3,6 +3,8 @@
 let num = 1;
 let rooms = [];
 let count = 0;
+let idx = {};
+let mafia = {};
 
 
 module.exports = function(server, session){
@@ -183,7 +185,7 @@ module.exports = function(server, session){
 
       let jobs = [];
       jobs.push(1);
-      if(player.length >= 4)jobs.push(1);
+      if(player.length > 4)jobs.push(1);
       for(let i = jobs.length; i < player.length; i++){
         jobs.push(0);
       }
@@ -194,17 +196,19 @@ module.exports = function(server, session){
         chat.to(player[i]).emit('set job', jobs[i]);
       }
       day_timer();
-      var a = setInterval(day_timer,1000);
-
+      idx[room] = setInterval(day_timer,1000);
+      console.log(idx);
       function day_timer() {
         if(day == 0){
           chat.to(room).emit('set day', day);
           day = 1;
-          a = setInterval(day_timer,5000);
+          clearInterval(idx[room]);
+          idx[room] = setInterval(day_timer,5000);
         }else{
           chat.to(room).emit('set day', day);
           day = 0;
-          a = setInterval(day_timer,1000);
+          clearInterval(idx[room]);
+          idx[room] = setInterval(day_timer,1000);
         }
       }
     });

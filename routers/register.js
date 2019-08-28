@@ -11,11 +11,20 @@ router.get('/',function(req, res){
 
 router.post('/', function(req, res){
   const email = req.body.email;
+  if(email.length < 1 ||){
+    return res.send('<script type="text/javascript">alert("이메일을 입력해주세요");window.location.href = "/register"</script>');
+  }
   if(req.body.password !== req.body.passwordcheck){
     return res.send('<script type="text/javascript">alert("비밀번호가 일치하지 않습니다");window.location.href = "/register"</script>');
   }
   const password = crypto.createHash('sha512').update(crypto.createHash('sha512').update(req.body.password).digest('base64')).digest('base64');
+  if(password.length < 1 ||){
+    return res.send('<script type="text/javascript">alert("비밀번호를 입력해주세요");window.location.href = "/register"</script>');
+  }
   const name = req.body.name;
+  if(name.length < 1){
+    return res.send('<script type="text/javascript">alert("닉네임을 입력해주세요");window.location.href = "/register"</script>');
+  }
   const selectSql = 'select * from users where email = ?';
   const insertSql = 'insert into users (email, password, name) values(?, ?, ?)';
   const insertParams = [email, password, name];

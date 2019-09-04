@@ -35,7 +35,7 @@
     $('#chat').on('submit', function(e){
       if(game && day === 1){
         if(job === 1){
-          socket.emit('send mafia message', $('message').val());
+          socket.emit('send mafia message', $('#message').val());
         }
       }
       else {

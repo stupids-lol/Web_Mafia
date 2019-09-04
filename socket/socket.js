@@ -5,12 +5,14 @@ let rooms = [];
 let count = 0;
 let idx = {};
 let mafia = {};
+let player = {};
+let jobs = {};
 
 
 module.exports = function(server, session){
   const io = require('socket.io')(server);
   const sharedsession = require("express-socket.io-session");
-  const lobby = io.of('/chatlobby');
+  const lobby = io.of('/lobby');
   const chat = io.of('/chat');
 
   lobby.use(sharedsession(session), {
@@ -173,27 +175,31 @@ module.exports = function(server, session){
     socket.on('game start', function(){
       let day = 0;
       let room = socket.handshake.session.user.room;
-      let player;
+      let room_player;
       let time = 0;
 
       for(let i = 0; i < rooms.length; i++){
         if(rooms[i].no == room){
-          player = rooms[i].player;
+          room_player = rooms[i].player;
           break;
         }
       }
 
-      let jobs = [];
-      jobs.push(1);
-      if(player.length > 4)jobs.push(1);
-      for(let i = jobs.length; i < player.length; i++){
-        jobs.push(0);
+      let room_jobs = [];
+      room_jobs.push(1);
+      if(player.length > 4)room_jobs.push(1);
+      for(let i = room_jobs.length; i < room_player.length; i++){
+        room_jobs.push(0);
       }
 
-      jobs.sort(function(){return 0.5-Math.random()});
 
-      for (let i = 0; i < player.length; i++){
-        chat.to(player[i]).emit('set job', jobs[i]);
+      room_jobs.sort(function(){return 0.5-Math.random()});
+
+      jobs[room] = room_jobs;
+      player[room] = room_player;
+
+      for (let i = 0; i < room_player.length; i++){
+        chat.to(room_player[i]).emit('set job', room_jobs[i]);
       }
       day_timer();
       idx[room] = setInterval(day_timer,1000);
@@ -213,7 +219,17 @@ module.exports = function(server, session){
       }
     });
 
-
+    socket.on('send mafia message', function(text){
+      const room = socket.handshake.session.user.room;
+      let msg = name + ' : ' + text;
+      console.log('[mafia]', msg , getToday());
+      console.log(socket.id)
+      for(let i = 0; i < jobs[room].length; i++){
+        if(jobs[room][i] === 1){
+          chat.to(player[room][i]).emit('receive mafia message', msg);
+        }
+      }
+    });
   });
 };
 

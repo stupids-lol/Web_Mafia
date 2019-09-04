@@ -21,24 +21,26 @@ html {
 
 .index-form{
   padding-top: 15%;
+  
 }
 
 
 .login-form{
   
-  display: block;
+  
   text-align: center;
   width: 9.5rem;
-  margin: 0px auto;
+  margin: 15px auto;
 }
 
 .form-control{
-  display: inline-block;
-  height: 30px;
-  width: 300px;
+  display: block;
+  height: 60px;
+  width: 600px;
   font-size: 60%;
   background-color: #323232;
   color: #fff;
+  
   
 }
 
@@ -87,8 +89,12 @@ html {
 
 
 .background{
-  background-image: url(/public/images/mafia-background.gif);
-  background-size: 100%;
+  background-color: #404040;
+}
+.input_box{
+  margin-left: auto;
+  margin-right: auto;
+  
 }
 
 

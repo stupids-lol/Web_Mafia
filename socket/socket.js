@@ -202,24 +202,26 @@ module.exports = function(server, session){
         chat.to(room_player[i]).emit('set job', room_jobs[i]);
       }
       day_timer();
-      idx[room] = setInterval(day_timer,1000);
+      idx[room] = setInterval(day_timer,100);
       console.log(idx);
       function day_timer() {
-        if(day == 0){ // 저녁
-          chat.to(room).emit('set day', day);
-          day = 1;
-          clearInterval(idx[room]);
-          idx[room] = setInterval(day_timer,30000);
-        }else if(day == 1){// 낮
+        if(day == 1){ // 저녁
           chat.to(room).emit('set day', day);
           day = 2;
           clearInterval(idx[room]);
-          idx[room] = setInterval(day_timer,60000);
-        }else{// 투표
+          idx[room] = setInterval(day_timer,30000);
+        }else if(day == 2){// 낮
           chat.to(room).emit('set day', day);
-          day = 0;
+          day = 3;
+          clearInterval(idx[room]);
+          idx[room] = setInterval(day_timer,60000);
+        }else if(day == 3){// 투표
+          chat.to(room).emit('set day', day);
+          day = 1;
           clearInterval(idx[room]);
           idx[room] = setInterval(day_timer,15000);
+        }else if(day == 0){ // 기본 인터벌 체크
+          day = 1;
         }
       }
     });

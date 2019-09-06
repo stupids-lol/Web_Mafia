@@ -205,16 +205,21 @@ module.exports = function(server, session){
       idx[room] = setInterval(day_timer,1000);
       console.log(idx);
       function day_timer() {
-        if(day == 0){
+        if(day == 0){ // 저녁
           chat.to(room).emit('set day', day);
           day = 1;
           clearInterval(idx[room]);
-          idx[room] = setInterval(day_timer,5000);
-        }else{
+          idx[room] = setInterval(day_timer,30000);
+        }else if(day == 2){// 낮
           chat.to(room).emit('set day', day);
           day = 0;
           clearInterval(idx[room]);
-          idx[room] = setInterval(day_timer,1000);
+          idx[room] = setInterval(day_timer,60000);
+        }else{// 투표
+          chat.to(room).emit('set day', day);
+          day = 0;
+          clearInterval(idx[room]);
+          idx[room] = setInterval(day_timer,15000);
         }
       }
     });

@@ -68,10 +68,11 @@
     socket.on('set day', function(newday){
       day = newday;
       if(newday == 0){
-        $('#day').text('day');
-      }
-      else{
         $('#day').text('night');
+      }else if{
+        $('#day').text('night');
+      }else{
+        $('#day').text('vote');
       }
       game = true;
     });

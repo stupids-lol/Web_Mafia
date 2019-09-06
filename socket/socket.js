@@ -210,7 +210,7 @@ module.exports = function(server, session){
           day = 1;
           clearInterval(idx[room]);
           idx[room] = setInterval(day_timer,30000);
-        }else if(day == 2){// 낮
+        }else if(day == 1){// 낮
           chat.to(room).emit('set day', day);
           day = 2;
           clearInterval(idx[room]);

@@ -37,13 +37,13 @@
       if (text !== ''){
         if (text.substr(0, 5) === '/vote'){
           let target = text.split(" ")[1];
-          if (!game || day !== 3 || target === ""){
-            $('#message').val('');
-            $('#message').focus();
-            e.preventDefault();
-            return alert('올바르지 않은 입력입니다');
+          if(!game || day !== 3){}
+          else if (target === ""){
+            alert('올바르지 않은 입력입니다');
           }
-          socket.emit('vote', target);
+          else{
+            socket.emit('vote', target);
+          }
         }
         else if(game && day === 1){
           if(job === 1){

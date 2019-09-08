@@ -34,24 +34,25 @@
     const socket = io('/chat');
     $('#chat').on('submit', function(e){
       let text = $.trim($('#message').val());
-      if (text === '')return;
-      if (text.substr(0, 5) === '/vote'){
-        let target = text.split(" ")[1];
-        if (!game || day !== 3 || target === ""){
-          $('#message').val('');
-          $('#message').focus();
-          e.preventDefault();
-          return alert('올바르지 않은 입력입니다');
+      if (text !== ''){
+        if (text.substr(0, 5) === '/vote'){
+          let target = text.split(" ")[1];
+          if (!game || day !== 3 || target === ""){
+            $('#message').val('');
+            $('#message').focus();
+            e.preventDefault();
+            return alert('올바르지 않은 입력입니다');
+          }
+          socket.emit('vote', target);
         }
-        socket.emit('vote', target);
-      }
-      else if(game && day === 1){
-        if(job === 1){
-          socket.emit('send mafia message', text);
+        else if(game && day === 1){
+          if(job === 1){
+            socket.emit('send mafia message', text);
+          }
         }
-      }
-      else {
-        socket.emit('send message', text);
+        else {
+          socket.emit('send message', text);
+        }
       }
       $('#message').val('');
       $('#message').focus();
@@ -79,11 +80,11 @@
     });
     socket.on('set day', function(newday){
       day = newday;
-      if(newday == 0){
+      if(newday === 1){
         $('#day').text('night');
-      }else if{
-        $('#day').text('night');
-      }else{
+      }else if(newday === 2){
+        $('#day').text('day');
+      }else if(newday === 3){
         $('#day').text('vote');
       }
       game = true;

@@ -1,7 +1,7 @@
 //socket.js
 
 let num = 1;
-let rooms = [];
+let rooms = {};
 let count = 0;
 
 module.exports = function(server, session){
@@ -36,7 +36,7 @@ module.exports = function(server, session){
       const no = num;
 
       num++;
-      rooms.push(data);
+      rooms[no] = data;
 
       console.log(no);
       console.log('socket.join',no);
@@ -91,13 +91,8 @@ module.exports = function(server, session){
 
       lobby.emit('join update', room);
 
-      for(let i =0; i < rooms.length; i++){
-        if (rooms[i].no === room){
-          rooms[i].nop++;
-          rooms[i].player.push(socket.id);
-          break;
-        }
-      }
+      rooms[room].nop++;
+      rooms[room].player.push(socket.id);
 
       count++;
       console.log('user connected: ', name , getToday());
@@ -128,24 +123,22 @@ module.exports = function(server, session){
         socket.handshake.session.user.room = -1;
       }
       lobby.emit('leave update', socket.handshake.session.user.join);
-      for(let i = 0; i < rooms.length; i++){
-        if (rooms[i].no == socket.handshake.session.user.join){
-          rooms[i].nop--;
-          if(rooms[i].nop === 0){
-            lobby.emit('del room', rooms[i].no);
-            rooms.splice(i,1);
-          }
-          else{
-            for(let j = 0; j < rooms[i].length; j++){
-              if(rooms[i].player[j] == socket.id){
-                lobby.emit('leave update');
-                rooms[i].player.splice(j,1);
-              }
+      if(socket.handshake.session.user.room !== -1){
+        rooms[room].nop--;
+        if(rooms[room].nop === 0){
+          lobby.emit('del room', rooms[room].no);
+          delete rooms[room];
+        }
+        else{
+          for(let i = 0; i < rooms[room].player.length; i++){
+            if(rooms[room].player[i] == socket.id){
+              lobby.emit('leave update');
+              rooms[room].player.splice(i,1);
             }
           }
-          break;
         }
       }
+
       socket.handshake.session.user.join = 0;
       socket.handshake.session.save();
     });
@@ -170,15 +163,8 @@ module.exports = function(server, session){
     socket.on('game start', function(){
       let day = 0;
       let room = socket.handshake.session.user.room;
-      let player;
+      let player = rooms[room].player;
       let time = 0;
-
-      for(let i = 0; i < rooms.length; i++){
-        if(rooms[i].no == room){
-          player = rooms[i].player;
-          break;
-        }
-      }
 
       let jobs = [];
       jobs.push(1);
@@ -197,7 +183,6 @@ module.exports = function(server, session){
       }
       day_timer();
       rooms[room].interval = setInterval(day_timer,100);
-      console.log(idx);
       function day_timer() {
         if(day == 1){ // 저녁
           chat.to(room).emit('set day', day);
@@ -227,7 +212,7 @@ module.exports = function(server, session){
       console.log(socket.id)
       for(let i = 0; i < rooms[room].jobs.length; i++){
         if(rooms[room].jobs[i] === 1){
-          chat.to(player[room][i]).emit('receive mafia message', msg);
+          chat.to(rooms[room].player[i]).emit('receive mafia message', msg);
         }
       }
     });

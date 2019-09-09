@@ -191,6 +191,13 @@ module.exports = function(server, session){
           rooms[room].interval = setInterval(day_timer,30000);
         }else if(day === 2){// 낮
           chat.to(room).emit('set day', day);
+          for(let i = 0; i < rooms[room].player.length; i++){
+            if(rooms[room].nickname[i] === rooms[room].die){
+              socket.to(rooms[room].die).emit('die');
+            }
+          }
+          let msg = rooms[room].die + '님이 마피아의 공격으로 사망하였습니다.';
+          chat.to(room).emit('receive message', msg);
           day = 3;
           clearInterval(rooms[room].interval);
           rooms[room].interval = setInterval(day_timer,60000);
@@ -228,11 +235,11 @@ module.exports = function(server, session){
               }
             }
             let msg = select + '님이 투표로 사망하였습니다';
-            chat.to(room).emit('receive message', msg)
+            chat.to(room).emit('receive message', msg);
           }
           else{
-            let msg = "투표가 무효되었습니다."
-            chat.to(room).emit('receive message', msg)
+            let msg = "투표가 무효되었습니다.";
+            chat.to(room).emit('receive message', msg);
           }
 
           clearInterval(rooms[room].interval);
@@ -253,6 +260,12 @@ module.exports = function(server, session){
         }
       }
     });
+
+    socket.on('send kill', function(text){
+      console.log('[kill] '+name+' => '+text);
+      rooms[room].die = text
+      console.log(rooms[room].die);
+    })
 
     socket.on('vote', function(target){
       console.log('[vote] '+name+' => '+target);

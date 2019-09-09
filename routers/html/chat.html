@@ -32,6 +32,21 @@
     let game = false;
     let rms = [];
     const socket = io('/chat');
+    $('#chat').on('kill',function(e){
+      let text = $.trim($('#message').val());
+      if (text !== ''){
+        if(text.substr(0, 5) === '/kill'){
+          let target = text.split(" ")[1];
+          if(!game || day !== 1){
+            alert('올바르지 않은 입력입니다.');
+          }else if(game && day === 1){
+            socket.emit('send kill', text);
+          }else{
+            alert('올바르지 않은 입력입니다.');
+          }
+        }
+      }
+    });
     $('#chat').on('submit', function(e){
       let text = $.trim($('#message').val());
       if (text !== ''){
@@ -44,8 +59,18 @@
           else{
             socket.emit('vote', target);
           }
-        }
-        else if(game && day === 1){
+        }else if(text.substr(0, 5) === '/kill'){
+          let target = text.split(" ")[1];
+          if(!game || day !== 1){
+            alert('올바르지 않은 입력입니다.');
+          }else if(game && day === 1){
+            if(job === 1){
+              socket.emit('send kill', target);
+            }
+          }else{
+            alert('올바르지 않은 입력입니다.');
+          }
+        }else if(game && day === 1){
           if(job === 1){
             socket.emit('send mafia message', text);
           }

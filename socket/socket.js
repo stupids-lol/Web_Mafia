@@ -198,6 +198,7 @@ module.exports = function(server, session){
           }
           let msg = rooms[room].die + '님이 마피아의 공격으로 사망하였습니다.';
           chat.to(room).emit('receive message', msg);
+          rooms[room].die = undefined;
           day = 3;
           clearInterval(rooms[room].interval);
           rooms[room].interval = setInterval(day_timer,60000);

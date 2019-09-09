@@ -203,8 +203,6 @@ module.exports = function(server, session){
         }else if (day === 4){
           chat.to(room).emit('set day', day);
           day = 1;
-          clearInterval(rooms[room].interval);
-          rooms[room].interval = setInterval(day_timer,5000);
 
           let select, max = 0;
           for(let i in rooms[room].vote){
@@ -236,6 +234,9 @@ module.exports = function(server, session){
             let msg = "투표가 무효되었습니다."
             chat.to(room).emit('receive message', msg)
           }
+
+          clearInterval(rooms[room].interval);
+          rooms[room].interval = setInterval(day_timer,5000);
         }else if(day === 0){ // 기본 인터벌 체크
           day = 1;
         }
@@ -243,8 +244,8 @@ module.exports = function(server, session){
     });
 
     socket.on('send mafia message', function(text){
-      let msg = '[mafia]'+ name + ' : ' + text;
-      console.log('[mafia]', msg , getToday());
+      let msg = '[mafia] '+ name + ' : ' + text;
+      console.log('[mafia] ', msg , getToday());
       console.log(socket.id)
       for(let i = 0; i < rooms[room].jobs.length; i++){
         if(rooms[room].jobs[i] === 1){

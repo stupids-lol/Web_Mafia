@@ -29,7 +29,7 @@ module.exports = function(server, session){
         no: num,
         name: name,
         nop: 0,
-        leader: socket.handshake.session.user.name,
+        nickname: [],
         player: []
       }
 
@@ -93,6 +93,7 @@ module.exports = function(server, session){
 
       rooms[room].nop++;
       rooms[room].player.push(socket.id);
+      rooms[room].nickname.push(name);
 
       count++;
       console.log('user connected: ', name , getToday());
@@ -131,7 +132,7 @@ module.exports = function(server, session){
         }
         else{
           for(let i = 0; i < rooms[room].player.length; i++){
-            if(rooms[room].player[i] == socket.id){
+            if(rooms[room].player[i] === socket.id){
               lobby.emit('leave update');
               rooms[room].player.splice(i,1);
             }
@@ -183,22 +184,59 @@ module.exports = function(server, session){
       day_timer();
       rooms[room].interval = setInterval(day_timer,100);
       function day_timer() {
-        if(day == 1){ // 저녁
+        if(day === 1){ // 저녁
           chat.to(room).emit('set day', day);
           day = 2;
           clearInterval(rooms[room].interval);
           rooms[room].interval = setInterval(day_timer,30000);
-        }else if(day == 2){// 낮
+        }else if(day === 2){// 낮
           chat.to(room).emit('set day', day);
           day = 3;
           clearInterval(rooms[room].interval);
           rooms[room].interval = setInterval(day_timer,60000);
-        }else if(day == 3){// 투표
+        }else if(day === 3){// 투표
+          chat.to(room).emit('set day', day);
+          day = 4;
+          clearInterval(rooms[room].interval);
+          rooms[room].interval = setInterval(day_timer,15000);
+          rooms[room].vote={};
+        }else if (day === 4){
           chat.to(room).emit('set day', day);
           day = 1;
           clearInterval(rooms[room].interval);
-          rooms[room].interval = setInterval(day_timer,15000);
-        }else if(day == 0){ // 기본 인터벌 체크
+          rooms[room].interval = setInterval(day_timer,5000);
+
+          let select, max = 0;
+          for(let i in rooms[room].vote){
+            if(i !== undefined && rooms[room].vote[i] > max){
+              max = rooms[room].vote[i];
+            }
+          }
+          for(let i in rooms[room].vote){
+            if(i !== undefined && rooms[room].vote[i] === max){
+              if (select === undefined){
+                select = i;
+              }
+              else{
+                select = undefined;
+                break;
+              }
+            }
+          }
+          if (select !== undefined){
+            for(let i = 0; i < rooms[room].player.length; i++){
+              if(rooms[room].nickname[i] === select){
+                socket.to(rooms[room].player[i]).emit('die');
+              }
+            }
+            let msg = select + '님이 투표로 사망하였습니다';
+            chat.to(room).emit('receive message', msg)
+          }
+          else{
+            let msg = "투표가 무효되었습니다."
+            chat.to(room).emit('receive message', msg)
+          }
+        }else if(day === 0){ // 기본 인터벌 체크
           day = 1;
         }
       }
@@ -216,8 +254,13 @@ module.exports = function(server, session){
     });
 
     socket.on('vote', function(target){
-      console.log('[vote]'+name+'=>'+target);
+      console.log('[vote] '+name+' => '+target);
+      if(rooms[room].vote[target] === undefined){
+        rooms[room].vote[target] = 0;
+      }
+      rooms[room].vote[target]++;
     });
+
   });
 };
 

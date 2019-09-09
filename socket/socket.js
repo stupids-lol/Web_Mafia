@@ -162,7 +162,6 @@ module.exports = function(server, session){
     */
     socket.on('game start', function(){
       let day = 0;
-      let room = socket.handshake.session.user.room;
       let player = rooms[room].player;
       let time = 0;
 
@@ -206,7 +205,6 @@ module.exports = function(server, session){
     });
 
     socket.on('send mafia message', function(text){
-      const room = socket.handshake.session.user.room;
       let msg = '[mafia]'+ name + ' : ' + text;
       console.log('[mafia]', msg , getToday());
       console.log(socket.id)
@@ -215,6 +213,10 @@ module.exports = function(server, session){
           chat.to(rooms[room].player[i]).emit('receive mafia message', msg);
         }
       }
+    });
+
+    socket.on('vote', function(target){
+      console.log('[vote]'+name+'=>'+target);
     });
   });
 };

@@ -203,6 +203,7 @@ module.exports = function(server, session){
           rooms[room].interval = setInterval(day_timer,60000);
         }else if(day === 3){// 투표
           chat.to(room).emit('set day', day);
+          chat.to(room).emit('receive message', '투표시간입니다!!');
           day = 4;
           clearInterval(rooms[room].interval);
           rooms[room].interval = setInterval(day_timer,15000);

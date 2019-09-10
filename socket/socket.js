@@ -123,18 +123,18 @@ module.exports = function(server, session){
       if(socket.handshake.session.user){
         socket.handshake.session.user.room = -1;
         lobby.emit('leave update', socket.handshake.session.user.join);
-      }
-      if(socket.handshake.session.user.room !== -1){
-        rooms[room].nop--;
-        if(rooms[room].nop === 0){
-          lobby.emit('del room', rooms[room].no);
-          delete rooms[room];
-        }
-        else{
-          for(let i = 0; i < rooms[room].player.length; i++){
-            if(rooms[room].player[i] === socket.id){
-              lobby.emit('leave update');
-              rooms[room].player.splice(i,1);
+        if(socket.handshake.session.user.room !== -1){
+          rooms[room].nop--;
+          if(rooms[room].nop === 0){
+            lobby.emit('del room', rooms[room].no);
+            delete rooms[room];
+          }
+          else{
+            for(let i = 0; i < rooms[room].player.length; i++){
+              if(rooms[room].player[i] === socket.id){
+                lobby.emit('leave update');
+                rooms[room].player.splice(i,1);
+              }
             }
           }
         }

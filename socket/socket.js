@@ -194,10 +194,10 @@ module.exports = function(server, session){
           for(let i = 0; i < rooms[room].player.length; i++){
             if(rooms[room].nickname[i] === rooms[room].die){
               socket.to(rooms[room].die).emit('die');
+              let msg = rooms[room].die + '님이 마피아의 공격으로 사망하였습니다.';
+              chat.to(room).emit('receive message', msg);
             }
           }
-          let msg = rooms[room].die + '님이 마피아의 공격으로 사망하였습니다.';
-          chat.to(room).emit('receive message', msg);
           rooms[room].die = undefined;
           day = 3;
           clearInterval(rooms[room].interval);

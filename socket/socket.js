@@ -122,8 +122,6 @@ module.exports = function(server, session){
       console.log(count + ' people are chatting.');
       if(socket.handshake.session.user){
         socket.handshake.session.user.room = -1;
-      }
-      else{
         lobby.emit('leave update', socket.handshake.session.user.join);
       }
       if(socket.handshake.session.user.room !== -1){

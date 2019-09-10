@@ -248,6 +248,8 @@ module.exports = function(server, session){
           rooms[room].interval = setInterval(day_timer,5000);
         }else if(day === 0){ // 기본 인터벌 체크
           day = 1;
+        }else{
+          clearInterval(rooms[room].interval);
         }
       }
     });

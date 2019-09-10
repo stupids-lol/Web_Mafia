@@ -123,7 +123,9 @@ module.exports = function(server, session){
       if(socket.handshake.session.user){
         socket.handshake.session.user.room = -1;
       }
-      lobby.emit('leave update', socket.handshake.session.user.join);
+      else{
+        lobby.emit('leave update', socket.handshake.session.user.join);
+      }
       if(socket.handshake.session.user.room !== -1){
         rooms[room].nop--;
         if(rooms[room].nop === 0){

@@ -33,7 +33,7 @@
             <td>{{ room.no }}</td>
             <td>{{ room.name }}</td>
             <td>{{ room.nop }}</td>
-            <td>{{ room.leader }}</td>
+            <td>{{ room.nickname[0] }}</td>
             <td><button v-on:click="joinRoom(room.no)"class="lobby-button">Enter</button></td>
           </tr>
         </template>
@@ -42,7 +42,7 @@
       <script src="/socket.io/socket.io.js"></script>
       <script type="text/javascript">
       let rms = [];
-      const socket = io('/chatlobby');
+      const socket = io('/lobby');
       socket.on('new room', function(data){
         for(let i = 0; i < data.length; i++){
           rms.push(data[i]);

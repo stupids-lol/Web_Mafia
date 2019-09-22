@@ -32,14 +32,52 @@
     let game = false;
     let rms = [];
     const socket = io('/chat');
-    $('#chat').on('submit', function(e){
-      if(game && day === 1){
-        if(job === 1){
-          socket.emit('send mafia message', $('message').val());
+    $('#chat').on('kill',function(e){
+      let text = $.trim($('#message').val());
+      if (text !== ''){
+        if(text.substr(0, 5) === '/kill'){
+          let target = text.split(" ")[1];
+          if(!game || day !== 1){
+            alert('올바르지 않은 입력입니다.');
+          }else if(game && day === 1){
+            socket.emit('send kill', text);
+          }else{
+            alert('올바르지 않은 입력입니다.');
+          }
         }
       }
-      else {
-        socket.emit('send message', $('#message').val());
+    });
+    $('#chat').on('submit', function(e){
+      let text = $.trim($('#message').val());
+      if (text !== ''){
+        if (text.substr(0, 5) === '/vote'){
+          let target = text.split(" ")[1];
+          if(!game || day !== 3){}
+          else if (target === ""){
+            alert('올바르지 않은 입력입니다');
+          }
+          else{
+            socket.emit('vote', target);
+          }
+        }else if(text.substr(0, 5) === '/kill'){
+          let target = text.split(" ")[1];
+          if(!game || day !== 1){
+            alert('올바르지 않은 입력입니다.');
+          }else if(game && day === 1){
+            if(job === 1){
+              socket.emit('send kill', target);
+            }
+          }else{
+            alert('올바르지 않은 입력입니다.');
+          }
+        }else if(game && day === 1){
+          if(job === 1){
+            socket.emit('send mafia message', text);
+          }
+        }
+        else {
+          socket.emit('send message', text);
+        }
       }
       $('#message').val('');
       $('#message').focus();
@@ -67,11 +105,14 @@
     });
     socket.on('set day', function(newday){
       day = newday;
-      if(newday == 0){
-        $('#day').text('day');
-      }
-      else{
+      if(newday === 1){
         $('#day').text('night');
+      }else if(newday === 2){
+        $('#day').text('day');
+      }else if(newday === 3){
+        $('#day').text('vote');
+      }else if(newday === 4){
+        $('$day').text('voting result');
       }
       game = true;
     });

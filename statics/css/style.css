@@ -103,33 +103,7 @@ html {
 
 /*index 끝*/
 
-.view{
-    overflow: hidden;
- 
-}
-.scrollBlind{
-    overflow-y: scroll;
-}
 
-.name{ 
-  width: 10%;
-}
-.message{ 
-  width: 70%; 
-}
-
-.chat{ 
-  width: 10%; 
-}
-
-#chatLog{
-  padding: 5px 10px;
-  width:95%; height: 200px;
-}
-
-#chatLog li:nth-child(odd) {
-  background: #eee;
-}
 
 /* 로비 부분 */
 
@@ -178,4 +152,110 @@ td{
   font-size: 25px;
   font-family: 'Nanum Gothic Coding', monospace;
 
+}
+
+
+/*chat.html*/
+
+.view{
+  overflow: hidden;
+
+}
+.scrollBlind{
+  overflow-y: scroll;
+}
+
+.name{ 
+width: 10%;
+}
+.message{ 
+width: 85%; 
+height: 40px;
+border-radius: 5px;
+background-color: #404040;
+color: #fff;
+border: 0.5px solid #fff;
+font-size: 60%;
+}
+
+.chat{ 
+border:0;
+outline: 0;
+width: 13%; 
+height: 35px;
+border-radius: 5px;
+font-size: 60%;
+
+background-color: #DDDCC5;
+font-family: 'Nanum Gothic Coding''
+
+
+}
+
+#chatLog{
+padding: 5px 10px;
+width:98%; 
+height: 680px;
+
+
+}
+#chatLog li{
+  padding-left: 20px;
+  border-bottom: 1px solid #404040;
+  color: #fff;
+  
+}
+
+#chatLog li:nth-child(odd) {
+background: #eeeeee15;
+
+}
+#chatLog li:nth-child(even) {
+  background: #DDDCC52f;
+  
+}
+  
+
+.chat_view{
+  background-color: #323232
+}
+
+#job{
+  margin: 0;
+  margin-top: 20px;
+  float: right;
+  white-space: nowrap;
+  color: #fff;
+  padding-left: 20px;
+  padding-right: 5%;
+}
+
+#day{
+  margin: 0;
+  margin-top: 20px;
+  /* padding-right: 5%; */
+  padding-left: 20px;
+  float: right;
+  white-space: nowrap;
+  color: #fff;
+}
+
+#job_day{
+  text-align: center;
+}
+
+.button_pack button{
+  border:0;
+  outline: 0;
+  border-radius: 5px;
+  font-size: 60%;
+  width: 150%;
+  height: 40px;
+  
+}
+.button_pack{
+
+  float :left;
+  white-space: nowrap;
+  padding-top: 10px;
 }

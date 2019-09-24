@@ -22,13 +22,12 @@ module.exports = function(server, session){
   lobby.on('connection', function(socket){
     socket.handshake.session.save();
 
-    socket.emit('new room', rooms);
+    socket.emit('new room', Object.values(rooms));
 
     socket.on('create room', function(name){
       let data = {
         no: num,
         name: name,
-        nop: 0,
         nickname: [],
         player: []
       }
@@ -36,16 +35,17 @@ module.exports = function(server, session){
       const no = num;
 
       num++;
-      rooms[no] = data;
 
       console.log(no);
       console.log('socket.join',no);
+      console.log(socket.handshake.session.user);
       socket.handshake.session.user.room = no;
       socket.handshake.session.user.join = no;
 
-      console.log(socket.handshake.session.user);
       socket.handshake.session.save();
 
+      rooms[no] = data;
+      console.log(rooms)
       lobby.emit('new room', [data]);
 
     });
@@ -53,6 +53,7 @@ module.exports = function(server, session){
     socket.on('join room', function(no){
       console.log(no);
       console.log('socket.join',no);
+
       socket.handshake.session.user.room = no;
       socket.handshake.session.user.join = no;
 
@@ -74,9 +75,12 @@ module.exports = function(server, session){
   */
   chat.on('connection', function(socket){ // if client connected
     socket.handshake.session.save();
+
     let name;
     let room;
+
     console.log(socket.handshake.session.user);
+
     if(socket.handshake.session.user === undefined){
       count++;
       socket.emit('redirection', '/');
@@ -89,9 +93,8 @@ module.exports = function(server, session){
       name = socket.handshake.session.user.name;
       room = socket.handshake.session.user.room;
 
-      lobby.emit('join update', room);
+      lobby.emit('join update', room, name);
 
-      rooms[room].nop++;
       rooms[room].player.push(socket.id);
       rooms[room].nickname.push(name);
 
@@ -118,24 +121,26 @@ module.exports = function(server, session){
       count--;
       chat.to(room).emit('receive message', name + ' left the chat');
       chat.to(room).emit('receive message', count + ' people are chatting.');
+
       console.log('user disconnected: ', name , getToday());
       console.log(count + ' people are chatting.');
+
       if(socket.handshake.session.user){
         socket.handshake.session.user.room = -1;
-        lobby.emit('leave update', socket.handshake.session.user.join);
-        if(socket.handshake.session.user.room !== -1){
-          rooms[room].nop--;
-          if(rooms[room].nop === 0){
-            lobby.emit('del room', rooms[room].no);
-            delete rooms[room];
-          }
-          else{
-            for(let i = 0; i < rooms[room].player.length; i++){
-              if(rooms[room].player[i] === socket.id){
-                lobby.emit('leave update');
-                rooms[room].player.splice(i,1);
-              }
+
+        for(let i = 0; i < rooms[room].player.length; i++){
+          if(rooms[room].player[i] === socket.id){
+            lobby.emit('leave update', socket.handshake.session.user.join, socket.handshake.session.user.name);
+
+            rooms[room].player.splice(i,1);
+            rooms[room].nickname.splice(i,1);
+
+            if(rooms[room].player.length === 0){
+              lobby.emit('del room', rooms[room].no);
+              rooms[room] = null;
+
             }
+            break;
           }
         }
       }

@@ -32,7 +32,7 @@
           <tr class="room-info">
             <td>{{ room.no }}</td>
             <td>{{ room.name }}</td>
-            <td>{{ room.nop }}</td>
+            <td>{{ room.nickname.length }}</td>
             <td>{{ room.nickname[0] }}</td>
             <td><button v-on:click="joinRoom(room.no)"class="lobby-button">Enter</button></td>
           </tr>
@@ -44,8 +44,9 @@
       let rms = [];
       const socket = io('/lobby');
       socket.on('new room', function(data){
-        for(let i = 0; i < data.length; i++){
-          rms.push(data[i]);
+        console.log(data)
+        for(let i in Object.values(data)){
+          rms.push(data[i])
         }
       });
       socket.on('join room', function(no){
@@ -56,27 +57,30 @@
           }
         }
       });
-      socket.on('join update', function(no){
-        console.log(no)
+      socket.on('join update', function(no, name){
+        console.log(no);
         for(let i = 0; i < rms.length; i++){
           if (rms[i].no == no){
-            rms[i].nop++;
+            rms[i].nickname.push(name);
             break;
           }
         }
       })
-      socket.on('leave update', function(no){
+      socket.on('leave update', function(no, name){
         console.log(no)
+        console.log(name)
+
         for(let i = 0; i < rms.length; i++){
           if (rms[i].no == no){
-            rms[i].nop--;
-            if(rms[i].nop){
-              rms.splice(i,1);
+            for(let i = 0; i < rms[no].nickname.length; i++){
+              if (rms[no].nickname[i] === name){
+                rms[no].nickname.splice(i,1);
+                break;
+              }
             }
-            break;
           }
         }
-      })
+      });
       let list = new Vue({
         el: '#list',
         data: {

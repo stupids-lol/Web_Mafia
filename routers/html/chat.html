@@ -34,6 +34,7 @@
     <script>
     let job;
     let day;
+    let die = false;
     let game = false;
     let rms = [];
     const socket = io('/chat');
@@ -57,7 +58,7 @@
       if (text !== ''){
         if (text.substr(0, 5) === '/vote'){
           let target = text.split(" ")[1];
-          if(!game || day !== 3){}
+          if(!game || day !== 3 || job == 10){}
           else if (target === ""){
             alert('올바르지 않은 입력입니다');
           }
@@ -66,7 +67,7 @@
           }
         }else if(text.substr(0, 5) === '/kill'){
           let target = text.split(" ")[1];
-          if(!game || day !== 1){
+          if(!game || day !== 1 || job == 10){
             alert('올바르지 않은 입력입니다.');
           }else if(game && day === 1){
             if(job === 1){
@@ -79,6 +80,8 @@
           if(job === 1){
             socket.emit('send mafia message', text);
           }
+        }else if(job == 10){
+          socket.emit('send die message', text);
         }
         else {
           socket.emit('send message', text);
@@ -96,15 +99,21 @@
       window.location.href = path;
     });
     socket.on('set job', function(newjob){
+      console.log(newjob)
       if(newjob == 0){
         $('#job').text('citizen');
-      }
-      else{
+      }else if(newjob == 1){
         $('#job').text('mafia');
+      }else if(newjob == 10){
+        $('#job').text('die');
       }
       job = newjob;
     });
     socket.on('receive mafia message', function(msg){
+      $('#chatLog').append($('<li>').text(msg));
+      $('.scrollBlind').scrollTop($('.scrollBlind')[0].scrollHeight);
+    });
+    socket.on('receive die message', function(msg){
       $('#chatLog').append($('<li>').text(msg));
       $('.scrollBlind').scrollTop($('.scrollBlind')[0].scrollHeight);
     });

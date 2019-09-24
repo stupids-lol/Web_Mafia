@@ -198,7 +198,9 @@ module.exports = function(server, session){
           chat.to(room).emit('set day', day);
           for(let i = 0; i < rooms[room].player.length; i++){
             if(rooms[room].nickname[i] === rooms[room].die){
-              socket.to(rooms[room].die).emit('die');
+              rooms[room].jobs[i] = 10;
+              chat.to(player[i]).emit('set job', 10);
+              console.log(i)
               let msg = rooms[room].die + '님이 마피아의 공격으로 사망하였습니다.';
               chat.to(room).emit('receive message', msg);
             }
@@ -238,7 +240,8 @@ module.exports = function(server, session){
           if (select !== undefined){
             for(let i = 0; i < rooms[room].player.length; i++){
               if(rooms[room].nickname[i] === select){
-                socket.to(rooms[room].player[i]).emit('die');
+                rooms[room].jobs[i] = 10;
+                chat.to(player[i]).emit('set job', 10);
               }
             }
             let msg = select + '님이 투표로 사망하였습니다';
@@ -266,6 +269,17 @@ module.exports = function(server, session){
       for(let i = 0; i < rooms[room].jobs.length; i++){
         if(rooms[room].jobs[i] === 1){
           chat.to(rooms[room].player[i]).emit('receive mafia message', msg);
+        }
+      }
+    });
+
+    socket.on('send die message', function(text){
+      let msg = '[die] '+ name + ' : ' + text;
+      console.log('[die] ', msg , getToday());
+      console.log(socket.id)
+      for(let i = 0; i < rooms[room].jobs.length; i++){
+        if(rooms[room].jobs[i] === 10){
+          chat.to(rooms[room].player[i]).emit('receive die message', msg);
         }
       }
     });

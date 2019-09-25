@@ -119,16 +119,23 @@
     });
     socket.on('set day', function(newday){
       day = newday;
+      console.log(day);
       if(newday === 1){
         $('#day').text('night');
+        game = true;
       }else if(newday === 2){
         $('#day').text('day');
+        game = true;
       }else if(newday === 3){
         $('#day').text('vote');
+        game = true;
       }else if(newday === 4){
         $('$day').text('voting result');
+        game = true;
+      }else if(newday === 5){
+        $('#day').text('end');
+        game = false;
       }
-      game = true;
     });
 
     function start(){

@@ -195,20 +195,38 @@ module.exports = function(server, session){
           clearInterval(rooms[room].interval);
           rooms[room].interval = setInterval(day_timer,30000);
         }else if(day === 2){// 낮
-          chat.to(room).emit('set day', day);
+          let diec = 0;
+          let mafiac = 0;
           for(let i = 0; i < rooms[room].player.length; i++){
             if(rooms[room].nickname[i] === rooms[room].die){
               rooms[room].jobs[i] = 10;
               chat.to(player[i]).emit('set job', 10);
-              console.log(i)
               let msg = rooms[room].die + '님이 마피아의 공격으로 사망하였습니다.';
               chat.to(room).emit('receive message', msg);
             }
           }
-          rooms[room].die = undefined;
-          day = 3;
-          clearInterval(rooms[room].interval);
-          rooms[room].interval = setInterval(day_timer,60000);
+          for(let i = 0; i < rooms[room].player.length; i++){
+            if(rooms[room].jobs[i] === 10){
+              diec += 1;
+            }else if(rooms[room].jobs[i] === 1){
+              mafiac += 1
+            }
+          }
+          if(rooms[room].player.length - diec - mafiac < mafiac || mafiac === 0){
+            chat.to(room).emit('set day', 5);
+            for(let i = 0; i < rooms[room].player.length; i++){
+              rooms[room].jobs[i] = 0;
+              rooms[room].die = undefined;
+            }
+            clearInterval(rooms[room].interval);
+          }else{
+            console.log(day);
+            chat.to(room).emit('set day', day);
+            rooms[room].die = undefined;
+            day = 3;
+            clearInterval(rooms[room].interval);
+            rooms[room].interval = setInterval(day_timer,60000);
+          }
         }else if(day === 3){// 투표
           chat.to(room).emit('set day', day);
           chat.to(room).emit('receive message', '투표시간입니다!!');
@@ -251,12 +269,27 @@ module.exports = function(server, session){
             let msg = "투표가 무효되었습니다.";
             chat.to(room).emit('receive message', msg);
           }
-
-          clearInterval(rooms[room].interval);
-          rooms[room].interval = setInterval(day_timer,5000);
+          for(let i = 0; i < rooms[room].player.length; i++){
+            if(rooms[room].jobs[i] === 10){
+              diec += 1;
+            }else if(rooms[room].jobs[i] === 1){
+              mafiac += 1
+            }
+          }
+          if(rooms[room].player.length - diec - mafiac < mafiac || mafiac === 0){
+            chat.to(room).emit('set day', 5);
+            for(let i = 0; i < rooms[room].player.length; i++){
+              rooms[room].jobs[i] = 0;
+              rooms[room].die = undefined;
+            }
+            clearInterval(rooms[room].interval);
+          }else{
+            clearInterval(rooms[room].interval);
+            rooms[room].interval = setInterval(day_timer,5000);
+          }
         }else if(day === 0){ // 기본 인터벌 체크
           day = 1;
-        }else{
+        }else if(day === 5){
           clearInterval(rooms[room].interval);
         }
       }
@@ -287,7 +320,6 @@ module.exports = function(server, session){
     socket.on('send kill', function(text){
       console.log('[kill] '+name+' => '+text);
       rooms[room].die = text
-      console.log(rooms[room].die);
     })
 
     socket.on('vote', function(target){

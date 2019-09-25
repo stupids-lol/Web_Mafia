@@ -46,7 +46,7 @@ app.all('*',
 
 
 
-http.listen(80, function(){
+http.listen(3000, function(){
   console.log(__dirname);
   console.log('server on!');
 });

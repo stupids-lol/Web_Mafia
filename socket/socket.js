@@ -235,7 +235,8 @@ module.exports = function(server, session){
           rooms[room].interval = setInterval(day_timer,15000);
           rooms[room].vote={};
         }else if (day === 4){
-          chat.to(room).emit('set day', day);
+          let diec = 0;
+          let mafiac = 0;
           day = 1;
 
           let select, max = 0;
@@ -284,6 +285,7 @@ module.exports = function(server, session){
             }
             clearInterval(rooms[room].interval);
           }else{
+            chat.to(room).emit('set day', day);
             clearInterval(rooms[room].interval);
             rooms[room].interval = setInterval(day_timer,5000);
           }

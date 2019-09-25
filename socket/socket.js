@@ -137,7 +137,7 @@ module.exports = function(server, session){
 
             if(rooms[room].player.length === 0){
               lobby.emit('del room', rooms[room].no);
-              rooms[room] = null;
+              delete rooms[room];
 
             }
             break;

@@ -72,12 +72,20 @@
 
         for(let i = 0; i < rms.length; i++){
           if (rms[i].no == no){
-            for(let i = 0; i < rms[no].nickname.length; i++){
-              if (rms[no].nickname[i] === name){
-                rms[no].nickname.splice(i,1);
+            for(let j = 0; j < rms[i].nickname.length; j++){
+              if (rms[i].nickname[j] === name){
+                rms[i].nickname.splice(j,1);
                 break;
               }
             }
+          }
+        }
+      });
+      socket.on('del room', function(no){
+        for(let i = 0; i < rms.length; i++){
+          if(rms[i].no === no){
+            rms.splice(i,1);
+            break;
           }
         }
       });
